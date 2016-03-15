@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		F9FE527B1C9844CC00C598A1 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = F9FE527A1C9844CC00C598A1 /* main.m */; };
 		F9FE527E1C9844CC00C598A1 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F9FE527D1C9844CC00C598A1 /* AppDelegate.m */; };
-		F9FE52811C9844CC00C598A1 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F9FE52801C9844CC00C598A1 /* ViewController.m */; };
+		F9FE52811C9844CC00C598A1 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F9FE52801C9844CC00C598A1 /* MainViewController.m */; };
 		F9FE52841C9844CC00C598A1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F9FE52821C9844CC00C598A1 /* Main.storyboard */; };
 		F9FE52871C9844CC00C598A1 /* zhihuDaily.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = F9FE52851C9844CC00C598A1 /* zhihuDaily.xcdatamodeld */; };
 		F9FE52891C9844CC00C598A1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F9FE52881C9844CC00C598A1 /* Assets.xcassets */; };
@@ -40,8 +40,8 @@
 		F9FE527A1C9844CC00C598A1 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		F9FE527C1C9844CC00C598A1 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		F9FE527D1C9844CC00C598A1 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		F9FE527F1C9844CC00C598A1 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		F9FE52801C9844CC00C598A1 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		F9FE527F1C9844CC00C598A1 /* MainViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MainViewController.h; sourceTree = "<group>"; };
+		F9FE52801C9844CC00C598A1 /* MainViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MainViewController.m; sourceTree = "<group>"; };
 		F9FE52831C9844CC00C598A1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		F9FE52861C9844CC00C598A1 /* zhihuDaily.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = zhihuDaily.xcdatamodel; sourceTree = "<group>"; };
 		F9FE52881C9844CC00C598A1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -103,15 +103,10 @@
 		F9FE52781C9844CC00C598A1 /* zhihuDaily */ = {
 			isa = PBXGroup;
 			children = (
-				F9FE527C1C9844CC00C598A1 /* AppDelegate.h */,
-				F9FE527D1C9844CC00C598A1 /* AppDelegate.m */,
-				F9FE527F1C9844CC00C598A1 /* ViewController.h */,
-				F9FE52801C9844CC00C598A1 /* ViewController.m */,
-				F9FE52821C9844CC00C598A1 /* Main.storyboard */,
-				F9FE52881C9844CC00C598A1 /* Assets.xcassets */,
-				F9FE528A1C9844CC00C598A1 /* LaunchScreen.storyboard */,
-				F9FE528D1C9844CC00C598A1 /* Info.plist */,
-				F9FE52851C9844CC00C598A1 /* zhihuDaily.xcdatamodeld */,
+				F9FE52B21C98463400C598A1 /* Others */,
+				F9FE52B11C98455F00C598A1 /* View */,
+				F9FE52B01C98455800C598A1 /* Controller */,
+				F9FE52AF1C9844E700C598A1 /* Model */,
 				F9FE52791C9844CC00C598A1 /* Supporting Files */,
 			);
 			path = zhihuDaily;
@@ -120,6 +115,9 @@
 		F9FE52791C9844CC00C598A1 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				F9FE528A1C9844CC00C598A1 /* LaunchScreen.storyboard */,
+				F9FE528D1C9844CC00C598A1 /* Info.plist */,
+				F9FE52881C9844CC00C598A1 /* Assets.xcassets */,
 				F9FE527A1C9844CC00C598A1 /* main.m */,
 			);
 			name = "Supporting Files";
@@ -141,6 +139,40 @@
 				F9FE52A31C9844CC00C598A1 /* Info.plist */,
 			);
 			path = zhihuDailyUITests;
+			sourceTree = "<group>";
+		};
+		F9FE52AF1C9844E700C598A1 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				F9FE52851C9844CC00C598A1 /* zhihuDaily.xcdatamodeld */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		F9FE52B01C98455800C598A1 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				F9FE527F1C9844CC00C598A1 /* MainViewController.h */,
+				F9FE52801C9844CC00C598A1 /* MainViewController.m */,
+				F9FE52821C9844CC00C598A1 /* Main.storyboard */,
+			);
+			name = Controller;
+			sourceTree = "<group>";
+		};
+		F9FE52B11C98455F00C598A1 /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
+		F9FE52B21C98463400C598A1 /* Others */ = {
+			isa = PBXGroup;
+			children = (
+				F9FE527C1C9844CC00C598A1 /* AppDelegate.h */,
+				F9FE527D1C9844CC00C598A1 /* AppDelegate.m */,
+			);
+			name = Others;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -276,7 +308,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F9FE52811C9844CC00C598A1 /* ViewController.m in Sources */,
+				F9FE52811C9844CC00C598A1 /* MainViewController.m in Sources */,
 				F9FE527E1C9844CC00C598A1 /* AppDelegate.m in Sources */,
 				F9FE52871C9844CC00C598A1 /* zhihuDaily.xcdatamodeld in Sources */,
 				F9FE527B1C9844CC00C598A1 /* main.m in Sources */,
@@ -424,6 +456,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = Siegrain.zhihuDaily;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -435,6 +468,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = Siegrain.zhihuDaily;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
