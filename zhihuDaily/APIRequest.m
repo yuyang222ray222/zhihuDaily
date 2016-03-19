@@ -8,13 +8,14 @@
 
 #import "APIRequest.h"
 #import "GCDUtil.h"
+#import "MD5Util.h"
 
 @implementation APIRequest
 + (void)requestWithUrl:(NSString*)url
 {
     [self requestWithUrl:url completion:nil];
 }
-+ (void)requestWithUrl:(NSString*)url completion:(void (^)(id data))completion
++ (void)requestWithUrl:(NSString*)url completion:(void (^)(id data, NSString* md5))completion
 {
     NSURLSession* session = [NSURLSession sharedSession];
     NSURL* requestURL = [NSURL URLWithString:url];
@@ -29,12 +30,14 @@
                     id result = [NSJSONSerialization JSONObjectWithData:data
                                                                 options:0
                                                                   error:&parseError];
-                    NSLog(@"获取数据成功\n%@", result);
+                    NSString* json = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+                    NSString* md5 = [MD5Util MD5ByAStr:json];
+                    NSLog(@"获取网络数据成功");
                     if (parseError)
                         return;
                     if (completion != nil) {
                         [[GCDUtil mainQueue] async:^{
-                            completion(result);
+                            completion(result, md5);
                         }];
                     }
                 }

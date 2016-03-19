@@ -7,19 +7,39 @@
 //
 
 #import "CacheUtil.h"
+#import "CachedImages.h"
+#import "DataKeys.m"
 #import "DateUtil.h"
+#import "GCDUtil.h"
 
 NSString* const kCacheImagePath = @"images/";
 NSString* const kDataPath = @"data.plist";
 
 @interface CacheUtil ()
 @property (copy, nonatomic) NSString* documentPath;
+@property (strong, nonatomic) NSMutableDictionary* cachedImagesDic;
 
 @property (copy, nonatomic) NSString* dataPath;
 @property (copy, nonatomic) NSString* imagePath;
 @end
 
 @implementation CacheUtil
+#pragma mark - init
++ (instancetype)cache
+{
+    static CacheUtil* util = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        util = [[CacheUtil alloc] init];
+    });
+    return util;
+}
+#pragma mark - dealloc
+- (void)dealloc
+{
+    [self saveData];
+}
+
 #pragma mark - getters
 - (NSString*)dataPath
 {
@@ -34,7 +54,6 @@ NSString* const kDataPath = @"data.plist";
         _imagePath = [self.documentPath stringByAppendingString:kCacheImagePath];
         if (![[NSFileManager defaultManager] fileExistsAtPath:_imagePath]) {
             [[NSFileManager defaultManager] createDirectoryAtPath:_imagePath withIntermediateDirectories:true attributes:nil error:nil];
-            NSLog(@"成功创建图片缓存目录");
         }
     }
     return _imagePath;
@@ -54,44 +73,75 @@ NSString* const kDataPath = @"data.plist";
         _dataDic = [NSMutableDictionary dictionary];
         if ([[NSFileManager defaultManager] fileExistsAtPath:self.dataPath]) {
             _dataDic = [NSMutableDictionary dictionaryWithContentsOfFile:self.dataPath];
-            NSLog(@"成功加载plist文件");
         }
     }
     return _dataDic;
 }
-
+- (NSMutableDictionary*)cachedImagesDic
+{
+    if (_cachedImagesDic == nil) {
+        _cachedImagesDic = self.dataDic[DATAKEY_CACHEDIMAGES];
+        if (_cachedImagesDic == nil) {
+            _cachedImagesDic = [NSMutableDictionary dictionary];
+            [self.dataDic setObject:_cachedImagesDic forKey:DATAKEY_CACHEDIMAGES];
+        }
+    }
+    return _cachedImagesDic;
+}
 #pragma mark - plist cache
 - (void)saveData
 {
     BOOL result = [self.dataDic writeToFile:self.dataPath atomically:true];
-    if (!result)
-        NSLog(@"保存plist失败！%@", self.dataPath);
+    if (result)
+        NSLog(@"成功保存plist");
 }
 
 #pragma mark - image cache
-- (void)cacheImage:(UIImage*)image withKey:(NSString*)key
+- (void)cacheImageWithKey:(NSString*)key andUrl:(NSString*)url completion:(void (^)(UIImage* image))completion
 {
-    NSString* cachedImagePath = [self.dataDic objectForKey:key];
-    if (cachedImagePath == nil) {
-        NSString* savePath = [self.imagePath stringByAppendingString:[NSString stringWithFormat:@"%@.png", [DateUtil dateIdentifierNow]]];
-        NSError* error = nil;
-        BOOL result = [UIImagePNGRepresentation(image) writeToFile:savePath options:NSDataWritingAtomic error:&error];
-        if (result) {
-            [self.dataDic setObject:savePath forKey:key];
-            [self saveData];
+    //异步加载图片并缓存到本地
+    [[GCDUtil globalQueueWithLevel:DEFAULT] async:^{
+        NSData* imgData = [NSData dataWithContentsOfURL:[NSURL URLWithString:url]];
+        UIImage* image = [UIImage imageWithData:imgData];
+
+        NSString* cachedImagePath = [self.dataDic objectForKey:key];
+        if (cachedImagePath == nil) {
+            NSString* fileName = [NSString stringWithFormat:@"%@%04d.png", [DateUtil dateIdentifierNow], arc4random() % 10000];
+            NSString* savePath = [self.imagePath stringByAppendingString:fileName];
+            NSError* error = nil;
+            BOOL result = [UIImagePNGRepresentation(image) writeToFile:savePath options:NSDataWritingAtomic error:&error];
+
+            if (result) {
+                [self.cachedImagesDic setObject:@{ DATAKEY_CACHEDIMAGES_URL : url,
+                    DATAKEY_CACHEDIMAGES_FILENAME : fileName }
+                                         forKey:key];
+                [self saveData];
+                if (completion)
+                    completion(image);
+            }
+            else
+                NSLog(@"Fail to save image %@", error.localizedDescription);
         }
-        else {
-            NSLog(@"Fail to save image %@", error.localizedDescription);
-        }
-    }
+    }];
 }
 - (UIImage*)imageWithKey:(NSString*)key
 {
-    NSString* path = [self.dataDic objectForKey:key];
-    if ([[NSFileManager defaultManager] fileExistsAtPath:self.imagePath]) {
+    CachedImages* model = [self cachedImageWithKey:key];
+    if (model == nil)
+        return nil;
+
+    NSString* path
+        = [self.imagePath stringByAppendingString:model.fileName];
+    if ([[NSFileManager defaultManager] fileExistsAtPath:path]) {
         UIImage* image = [UIImage imageWithContentsOfFile:path];
         return image;
     }
     return nil;
+}
+- (CachedImages*)cachedImageWithKey:(NSString*)key
+{
+    //早知道就用coredata了。。
+    CachedImages* model = [CachedImages cachedImageWithDic:self.cachedImagesDic[key]];
+    return model.fileName == nil ? nil : model;
 }
 @end

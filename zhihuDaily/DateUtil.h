@@ -9,6 +9,10 @@
 #import <Foundation/Foundation.h>
 
 @interface DateUtil : NSObject
-+ (NSString*)dateString:(NSDate*)date WithFormat:(NSString*)format;
++ (NSDate*)stringToDate:(NSString*)dateString format:(NSString*)format;
++ (NSString*)dateString:(NSDate*)date withFormat:(NSString*)format;
 + (NSString*)dateIdentifierNow;
++ (NSString*)dateString:(NSString*)originalStr fromFormat:(NSString*)fromFormat toFormat:(NSString*)toFormat;
++ (NSString*)appendWeekStringFromDate:(NSDate*)date withFormat:(NSString*)format;
++ (NSString*)weekdayStringFromDate:(NSDate*)inputDate;
 @end

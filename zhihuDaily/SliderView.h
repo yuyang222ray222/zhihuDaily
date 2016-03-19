@@ -9,14 +9,16 @@
 #import <UIKit/UIKit.h>
 @class SliderView;
 
-@protocol SliderViewDataSource
+@protocol SliderViewDataSource <NSObject>
 @required
 /**
  *  指定Slider的项目数
  *
- *  @return <#return value description#>
+ *  @return return value description
  */
 - (NSUInteger)numberOfItemsInSliderView;
+
+@optional
 /**
  *  指定索引位置的图片
  *
@@ -24,9 +26,7 @@
  *
  *  @return <#return value description#>
  */
-- (UIImage *)imageForSliderAtIndex:(NSInteger)index;
-
-@optional
+- (UIImage*)imageForSliderAtIndex:(NSInteger)index;
 /**
  *  指定索引位置的内容
  *
@@ -34,7 +34,7 @@
  *
  *  @return <#return value description#>
  */
-- (NSString *)contentForSliderAtIndex:(NSInteger)index;
+- (NSString*)contentForSliderAtIndex:(NSInteger)index;
 /**
  *  指定索引位置的事件
  *
@@ -44,6 +44,12 @@
 @end
 
 @interface SliderView : UIView
-@property(weak, nonatomic) id<SliderViewDataSource> dataSource;
+@property (weak, nonatomic) id<SliderViewDataSource> dataSource;
 
+/**
+ *  设定索引位置的图片
+ *
+ *  @param index <#index description#>
+ */
+- (void)setImage:(UIImage*)image atIndex:(NSUInteger)index;
 @end

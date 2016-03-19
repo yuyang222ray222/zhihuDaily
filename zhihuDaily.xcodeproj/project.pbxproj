@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		F91CD7B31C99A45E00CBDA28 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F91CD7B21C99A45E00CBDA28 /* LaunchScreen.storyboard */; };
+		F99C9FA21C9AE1CA003A0E91 /* CachedImages.m in Sources */ = {isa = PBXBuildFile; fileRef = F99C9FA11C9AE1CA003A0E91 /* CachedImages.m */; };
+		F99C9FA51C9B017D003A0E91 /* MD5Util.m in Sources */ = {isa = PBXBuildFile; fileRef = F99C9FA41C9B017D003A0E91 /* MD5Util.m */; };
+		F99FFA041C9A8BBA0025C736 /* GradientView.m in Sources */ = {isa = PBXBuildFile; fileRef = F99FFA031C9A8BBA0025C736 /* GradientView.m */; };
 		F9FE527B1C9844CC00C598A1 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = F9FE527A1C9844CC00C598A1 /* main.m */; };
 		F9FE527E1C9844CC00C598A1 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F9FE527D1C9844CC00C598A1 /* AppDelegate.m */; };
 		F9FE52811C9844CC00C598A1 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F9FE52801C9844CC00C598A1 /* MainViewController.m */; };
@@ -47,6 +50,13 @@
 
 /* Begin PBXFileReference section */
 		F91CD7B21C99A45E00CBDA28 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
+		F99C9FA01C9AE1CA003A0E91 /* CachedImages.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CachedImages.h; sourceTree = "<group>"; };
+		F99C9FA11C9AE1CA003A0E91 /* CachedImages.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CachedImages.m; sourceTree = "<group>"; };
+		F99C9FA31C9B017D003A0E91 /* MD5Util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MD5Util.h; sourceTree = "<group>"; };
+		F99C9FA41C9B017D003A0E91 /* MD5Util.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MD5Util.m; sourceTree = "<group>"; };
+		F99FFA021C9A8BBA0025C736 /* GradientView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GradientView.h; sourceTree = "<group>"; };
+		F99FFA031C9A8BBA0025C736 /* GradientView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GradientView.m; sourceTree = "<group>"; };
+		F9E2CB791C9AAC0B00F02856 /* DataKeys.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataKeys.m; sourceTree = "<group>"; };
 		F9FE52761C9844CC00C598A1 /* zhihuDaily.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = zhihuDaily.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F9FE527A1C9844CC00C598A1 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		F9FE527C1C9844CC00C598A1 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -176,12 +186,15 @@
 		F9FE52AF1C9844E700C598A1 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				F9E2CB791C9AAC0B00F02856 /* DataKeys.m */,
 				F9FE52B61C98738000C598A1 /* Stories.h */,
 				F9FE52B71C98738000C598A1 /* Stories.m */,
 				F9FE52C21C9935A100C598A1 /* Story.h */,
 				F9FE52C31C9935A100C598A1 /* Story.m */,
 				F9FE52CC1C99557100C598A1 /* StartImage.h */,
 				F9FE52CD1C99557100C598A1 /* StartImage.m */,
+				F99C9FA01C9AE1CA003A0E91 /* CachedImages.h */,
+				F99C9FA11C9AE1CA003A0E91 /* CachedImages.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -207,6 +220,8 @@
 			children = (
 				F9FE52B31C984DB800C598A1 /* SliderView.h */,
 				F9FE52B41C984DB800C598A1 /* SliderView.m */,
+				F99FFA021C9A8BBA0025C736 /* GradientView.h */,
+				F99FFA031C9A8BBA0025C736 /* GradientView.m */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -239,6 +254,8 @@
 				F9FE52D81C99773200C598A1 /* CacheUtil.m */,
 				F9FE52DA1C998FFB00C598A1 /* DateUtil.h */,
 				F9FE52DB1C998FFB00C598A1 /* DateUtil.m */,
+				F99C9FA31C9B017D003A0E91 /* MD5Util.h */,
+				F99C9FA41C9B017D003A0E91 /* MD5Util.m */,
 			);
 			name = Util;
 			sourceTree = "<group>";
@@ -385,11 +402,14 @@
 				F9FE52D91C99773200C598A1 /* CacheUtil.m in Sources */,
 				F9FE527E1C9844CC00C598A1 /* AppDelegate.m in Sources */,
 				F9FE52D11C995FAA00C598A1 /* LoadingViewController.m in Sources */,
+				F99C9FA51C9B017D003A0E91 /* MD5Util.m in Sources */,
 				F9FE527B1C9844CC00C598A1 /* main.m in Sources */,
 				F9FE52D61C996B8E00C598A1 /* TestViewController.m in Sources */,
 				F9FE52B51C984DB800C598A1 /* SliderView.m in Sources */,
 				F9FE52CB1C99380500C598A1 /* GCDUtil.m in Sources */,
+				F99FFA041C9A8BBA0025C736 /* GradientView.m in Sources */,
 				F9FE52C41C9935A100C598A1 /* Story.m in Sources */,
+				F99C9FA21C9AE1CA003A0E91 /* CachedImages.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

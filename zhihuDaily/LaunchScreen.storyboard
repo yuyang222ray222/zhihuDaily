@@ -14,14 +14,27 @@
                         <viewControllerLayoutGuide type="bottom" id="7tK-30-bjW"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="Avd-6F-q4C">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="launch_screen_logo" translatesAutoresizingMaskIntoConstraints="NO" id="5R6-xz-01N" userLabel="Logo">
+                                <rect key="frame" x="125" y="576" width="125" height="45"/>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="5R6-xz-01N" firstAttribute="centerX" secondItem="Avd-6F-q4C" secondAttribute="centerX" id="jew-ga-vXk"/>
+                            <constraint firstItem="7tK-30-bjW" firstAttribute="top" secondItem="5R6-xz-01N" secondAttribute="bottom" constant="46" id="zf8-fG-m6K"/>
+                        </constraints>
                     </view>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="04s-vd-b0L" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="253" y="1"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="launch_screen_logo" width="125" height="45"/>
+    </resources>
 </document>

@@ -10,7 +10,7 @@
 
 @interface APIRequest : NSObject
 + (void)requestWithUrl:(NSString*)url;
-+ (void)requestWithUrl:(NSString*)url completion:(void (^)(id data))completion;
++ (void)requestWithUrl:(NSString*)url completion:(void (^)(id data, NSString* md5))completion;
 
 + (NSDictionary*)objToDic:(id)object;
 @end
