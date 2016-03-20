@@ -43,7 +43,9 @@
         UIImageView* imageView = [[UIImageView alloc]
             initWithFrame:CGRectMake(i * self.viewSize.width, 0,
                               self.viewSize.width, self.viewSize.height)];
-        imageView.backgroundColor = [UIColor lightGrayColor];
+        imageView.contentMode = UIViewContentModeScaleAspectFill;
+
+        imageView.backgroundColor = [UIColor colorWithWhite:0 alpha:0.3];
         [self.scrollView addSubview:imageView];
         [self.imageViews addObject:imageView];
 
@@ -65,7 +67,6 @@
     }
 }
 
-#pragma mark - getters
 - (UIPageControl*)pageControl
 {
     if (_pageControl == nil) {
@@ -74,9 +75,11 @@
         _pageControl.numberOfPages = self.imageCount;
         CGSize pagerSize = [_pageControl sizeForNumberOfPages:self.imageCount];
         _pageControl.bounds = CGRectMake(0, 0, self.viewSize.width, pagerSize.height);
-        _pageControl.center = CGPointMake(self.center.x, 130);
-        _pageControl.pageIndicatorTintColor = [UIColor grayColor];
-        _pageControl.currentPageIndicatorTintColor = [UIColor blackColor];
+        _pageControl.center = CGPointMake(self.center.x, self.viewSize.height - 15);
+
+        _pageControl.pageIndicatorTintColor = [UIColor colorWithWhite:1 alpha:0.3];
+        _pageControl.currentPageIndicatorTintColor = [UIColor whiteColor];
+
         [_pageControl addTarget:self
                          action:@selector(pageChanged:)
                forControlEvents:UIControlEventValueChanged];
@@ -93,7 +96,6 @@
         [_scrollView
             setContentSize:CGSizeMake(self.viewSize.width * self.imageCount,
                                self.viewSize.height)];
-        _scrollView.backgroundColor = [UIColor redColor];
         [_scrollView setPagingEnabled:true];
 
         UIButton* button = [[UIButton alloc]
@@ -114,6 +116,7 @@
     }
     return _scrollView;
 }
+#pragma mark - getters
 - (CGSize)viewSize
 {
     return self.bounds.size;

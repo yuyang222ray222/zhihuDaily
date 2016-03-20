@@ -31,6 +31,8 @@
 
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         MainViewController* mainVC = [[MainViewController alloc] init];
+
+        mainVC.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
         [self presentViewController:mainVC animated:true completion:nil];
     });
 }
@@ -64,4 +66,8 @@
     [self.view bringSubviewToFront:self.authorLabel];
 }
 
+- (UIStatusBarStyle)preferredStatusBarStyle
+{
+    return UIStatusBarStyleLightContent;
+}
 @end

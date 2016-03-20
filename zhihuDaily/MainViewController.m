@@ -18,6 +18,8 @@
 #import "Stories.h"
 #import "zhihuDailyAPI.h"
 
+static const NSInteger kContentOffsetY = 120;
+
 @interface MainViewController ()
 @property (copy, nonatomic) NSArray<Stories*>* topStories;
 @property (strong, nonatomic) NSMutableArray<Stories*>* stories;
@@ -40,7 +42,7 @@
 - (SliderViewController*)sliderViewController
 {
     if (_sliderViewController == nil) {
-        _sliderViewController = [[SliderViewController alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 200) andStories:self.topStories];
+        _sliderViewController = [[SliderViewController alloc] initWithFrame:CGRectMake(0, -kContentOffsetY, self.view.bounds.size.width, 180 + kContentOffsetY) andStories:self.topStories];
     }
     return _sliderViewController;
 }
@@ -61,6 +63,7 @@
 {
     [self addChildViewController:self.sliderViewController];
     self.tableView.tableHeaderView = self.sliderViewController.view;
+    self.tableView.bounds = CGRectMake(0, -kContentOffsetY, self.view.bounds.size.width, self.view.bounds.size.height + kContentOffsetY);
 }
 
 #pragma mark - 加载、初始化数据
@@ -119,8 +122,23 @@
 {
     [self.sliderViewController.sliderView stopSliding];
 }
+
 - (void)scrollViewDidEndDragging:(UIScrollView*)scrollView willDecelerate:(BOOL)decelerate
 {
     [self.sliderViewController.sliderView startSliding];
+}
+- (void)scrollViewDidScroll:(UIScrollView*)scrollView
+{
+    //限制scrollview的bounce size
+    if (scrollView.contentOffset.y <= -50) {
+        CGPoint offset = scrollView.contentOffset;
+        offset.y = -50;
+        scrollView.contentOffset = offset;
+    }
+}
+#pragma mark statusbar style
+- (UIStatusBarStyle)preferredStatusBarStyle
+{
+    return UIStatusBarStyleLightContent;
 }
 @end
