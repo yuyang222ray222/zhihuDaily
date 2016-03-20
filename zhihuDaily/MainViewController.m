@@ -14,15 +14,16 @@
 #import "MD5Util.h"
 #import "MainViewController.h"
 #import "SliderView.h"
+#import "SliderViewController.h"
 #import "Stories.h"
 #import "zhihuDailyAPI.h"
 
-@interface MainViewController () <SliderViewDataSource>
+@interface MainViewController ()
 @property (copy, nonatomic) NSArray<Stories*>* topStories;
 @property (strong, nonatomic) NSMutableArray<Stories*>* stories;
 @property (strong, nonatomic) NSMutableArray* dates;
 
-@property (strong, nonatomic) SliderView* sliderView;
+@property (strong, nonatomic) SliderViewController* sliderViewController;
 
 @property (assign, nonatomic) BOOL isLoaded;
 @end
@@ -36,14 +37,12 @@
     }
     return _dates;
 }
-- (SliderView*)sliderView
+- (SliderViewController*)sliderViewController
 {
-    if (_sliderView == nil) {
-        _sliderView = [[SliderView alloc] init];
-        _sliderView.dataSource = self;
-        _sliderView.frame = CGRectMake(0, 0, self.view.bounds.size.width, 200);
+    if (_sliderViewController == nil) {
+        _sliderViewController = [[SliderViewController alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 200) andStories:self.topStories];
     }
-    return _sliderView;
+    return _sliderViewController;
 }
 #pragma mark - init
 - (void)viewDidLoad
@@ -57,30 +56,13 @@
 - (void)buildMainPage
 {
     [self loadData];
-    [self buildSliderView];
 }
 - (void)buildSliderView
 {
-    self.tableView.tableHeaderView = self.sliderView;
-    //[self loadSliderViewImages];
+    [self addChildViewController:self.sliderViewController];
+    self.tableView.tableHeaderView = self.sliderViewController.view;
 }
-#pragma mark - sliderView
-- (void)loadSliderViewImages
-{
-    CacheUtil* util = [CacheUtil cache];
-    [self.stories enumerateObjectsUsingBlock:^(Stories* stories, NSUInteger idx, BOOL* _Nonnull stop) {
-        for (id url in stories.images) {
-            if ([util cachedImageWithKey:url] == nil)
-                [util cacheImageWithKey:url andUrl:url completion:^(UIImage* image) {
-                    [self.sliderView setImage:image atIndex:idx];
-                }];
-        }
-    }];
-}
-- (NSUInteger)numberOfItemsInSliderView
-{
-    return self.topStories.count;
-}
+
 #pragma mark - 加载、初始化数据
 - (void)loadData
 {
@@ -114,6 +96,9 @@
                 if (!self.isLoaded) {
                     [self initDataWithDic:dic];
                     self.isLoaded = true;
+
+                    //数据加载完后构建SliderView
+                    [self buildSliderView];
                 }
             }];
 }
@@ -126,6 +111,16 @@
     NSString* dateStrWithWeek = [DateUtil appendWeekStringFromDate:date withFormat:@"MM月dd日 "];
     [self.dates addObject:dateStrWithWeek];
 
-    NSLog(@"%@\n%@", self.dates, self.topStories);
+    NSLog(@"主页数据读取完毕");
+}
+
+#pragma mark - scrollview delegate
+- (void)scrollViewWillBeginDragging:(UIScrollView*)scrollView
+{
+    [self.sliderViewController.sliderView stopSliding];
+}
+- (void)scrollViewDidEndDragging:(UIScrollView*)scrollView willDecelerate:(BOOL)decelerate
+{
+    [self.sliderViewController.sliderView startSliding];
 }
 @end

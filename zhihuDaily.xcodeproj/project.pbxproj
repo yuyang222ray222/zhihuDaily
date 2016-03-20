@@ -11,6 +11,7 @@
 		F99C9FA21C9AE1CA003A0E91 /* CachedImages.m in Sources */ = {isa = PBXBuildFile; fileRef = F99C9FA11C9AE1CA003A0E91 /* CachedImages.m */; };
 		F99C9FA51C9B017D003A0E91 /* MD5Util.m in Sources */ = {isa = PBXBuildFile; fileRef = F99C9FA41C9B017D003A0E91 /* MD5Util.m */; };
 		F99FFA041C9A8BBA0025C736 /* GradientView.m in Sources */ = {isa = PBXBuildFile; fileRef = F99FFA031C9A8BBA0025C736 /* GradientView.m */; };
+		F9EB59A01C9DA86D00E54379 /* SliderView.m in Sources */ = {isa = PBXBuildFile; fileRef = F9EB599F1C9DA86D00E54379 /* SliderView.m */; };
 		F9FE527B1C9844CC00C598A1 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = F9FE527A1C9844CC00C598A1 /* main.m */; };
 		F9FE527E1C9844CC00C598A1 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F9FE527D1C9844CC00C598A1 /* AppDelegate.m */; };
 		F9FE52811C9844CC00C598A1 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F9FE52801C9844CC00C598A1 /* MainViewController.m */; };
@@ -18,7 +19,7 @@
 		F9FE52891C9844CC00C598A1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F9FE52881C9844CC00C598A1 /* Assets.xcassets */; };
 		F9FE52971C9844CC00C598A1 /* zhihuDailyTests.m in Sources */ = {isa = PBXBuildFile; fileRef = F9FE52961C9844CC00C598A1 /* zhihuDailyTests.m */; };
 		F9FE52A21C9844CC00C598A1 /* zhihuDailyUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = F9FE52A11C9844CC00C598A1 /* zhihuDailyUITests.m */; };
-		F9FE52B51C984DB800C598A1 /* SliderView.m in Sources */ = {isa = PBXBuildFile; fileRef = F9FE52B41C984DB800C598A1 /* SliderView.m */; };
+		F9FE52B51C984DB800C598A1 /* SliderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F9FE52B41C984DB800C598A1 /* SliderViewController.m */; };
 		F9FE52B81C98738000C598A1 /* Stories.m in Sources */ = {isa = PBXBuildFile; fileRef = F9FE52B71C98738000C598A1 /* Stories.m */; };
 		F9FE52C41C9935A100C598A1 /* Story.m in Sources */ = {isa = PBXBuildFile; fileRef = F9FE52C31C9935A100C598A1 /* Story.m */; };
 		F9FE52C81C99369500C598A1 /* APIRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = F9FE52C71C99369500C598A1 /* APIRequest.m */; };
@@ -57,6 +58,8 @@
 		F99FFA021C9A8BBA0025C736 /* GradientView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GradientView.h; sourceTree = "<group>"; };
 		F99FFA031C9A8BBA0025C736 /* GradientView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GradientView.m; sourceTree = "<group>"; };
 		F9E2CB791C9AAC0B00F02856 /* DataKeys.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataKeys.m; sourceTree = "<group>"; };
+		F9EB599E1C9DA86D00E54379 /* SliderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SliderView.h; sourceTree = "<group>"; };
+		F9EB599F1C9DA86D00E54379 /* SliderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SliderView.m; sourceTree = "<group>"; };
 		F9FE52761C9844CC00C598A1 /* zhihuDaily.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = zhihuDaily.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F9FE527A1C9844CC00C598A1 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		F9FE527C1C9844CC00C598A1 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -72,8 +75,8 @@
 		F9FE529D1C9844CC00C598A1 /* zhihuDailyUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = zhihuDailyUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		F9FE52A11C9844CC00C598A1 /* zhihuDailyUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = zhihuDailyUITests.m; sourceTree = "<group>"; };
 		F9FE52A31C9844CC00C598A1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		F9FE52B31C984DB800C598A1 /* SliderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SliderView.h; sourceTree = "<group>"; };
-		F9FE52B41C984DB800C598A1 /* SliderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SliderView.m; sourceTree = "<group>"; };
+		F9FE52B31C984DB800C598A1 /* SliderViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SliderViewController.h; sourceTree = "<group>"; };
+		F9FE52B41C984DB800C598A1 /* SliderViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SliderViewController.m; sourceTree = "<group>"; };
 		F9FE52B61C98738000C598A1 /* Stories.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Stories.h; sourceTree = "<group>"; };
 		F9FE52B71C98738000C598A1 /* Stories.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Stories.m; sourceTree = "<group>"; };
 		F9FE52BF1C9931B100C598A1 /* zhihuDailyAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = zhihuDailyAPI.h; sourceTree = "<group>"; };
@@ -202,6 +205,8 @@
 		F9FE52B01C98455800C598A1 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				F9FE52B31C984DB800C598A1 /* SliderViewController.h */,
+				F9FE52B41C984DB800C598A1 /* SliderViewController.m */,
 				F9FE527F1C9844CC00C598A1 /* MainViewController.h */,
 				F9FE52801C9844CC00C598A1 /* MainViewController.m */,
 				F9FE52821C9844CC00C598A1 /* Main.storyboard */,
@@ -218,10 +223,10 @@
 		F9FE52B11C98455F00C598A1 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				F9FE52B31C984DB800C598A1 /* SliderView.h */,
-				F9FE52B41C984DB800C598A1 /* SliderView.m */,
 				F99FFA021C9A8BBA0025C736 /* GradientView.h */,
 				F99FFA031C9A8BBA0025C736 /* GradientView.m */,
+				F9EB599E1C9DA86D00E54379 /* SliderView.h */,
+				F9EB599F1C9DA86D00E54379 /* SliderView.m */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -405,8 +410,9 @@
 				F99C9FA51C9B017D003A0E91 /* MD5Util.m in Sources */,
 				F9FE527B1C9844CC00C598A1 /* main.m in Sources */,
 				F9FE52D61C996B8E00C598A1 /* TestViewController.m in Sources */,
-				F9FE52B51C984DB800C598A1 /* SliderView.m in Sources */,
+				F9FE52B51C984DB800C598A1 /* SliderViewController.m in Sources */,
 				F9FE52CB1C99380500C598A1 /* GCDUtil.m in Sources */,
+				F9EB59A01C9DA86D00E54379 /* SliderView.m in Sources */,
 				F99FFA041C9A8BBA0025C736 /* GradientView.m in Sources */,
 				F9FE52C41C9935A100C598A1 /* Story.m in Sources */,
 				F99C9FA21C9AE1CA003A0E91 /* CachedImages.m in Sources */,

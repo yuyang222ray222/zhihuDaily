@@ -1,13 +1,12 @@
 //
-//  ViewController.h
+//  SliderView.m
 //  zhihuDaily
 //
-//  Created by Siegrain on 16/3/15.
+//  Created by Siegrain on 16/3/19.
 //  Copyright © 2016年 siegrain.zhihuDaily. All rights reserved.
 //
 
 #import "SliderView.h"
-
 @interface SliderView () <UIScrollViewDelegate>
 @property (strong, nonatomic) UIScrollView* scrollView;
 @property (strong, nonatomic) UIPageControl* pageControl;
@@ -22,21 +21,22 @@
 
 @implementation SliderView
 #pragma mark - Initialization
-- (instancetype)init
+- (instancetype)initWithFrame:(CGRect)frame
 {
-    if (self = [super init]) {
-        [self loadImages];
-        if ([self.dataSource respondsToSelector:@selector(contentForSliderAtIndex:)])
-            [self loadContents];
-        [self addSubview:self.scrollView];
-        [self bringSubviewToFront:self.pageControl];
-        [self startTimer];
-
-        self.scrollView.frame = CGRectMake(0, 0, self.frame.size.width, self.frame.size.height);
+    if (self = [super initWithFrame:frame]) {
+        self.viewSize = frame.size;
     }
     return self;
 }
-
+- (void)buildSliderView
+{
+    [self loadImages];
+    if ([self.dataSource respondsToSelector:@selector(contentForSliderAtIndex:)])
+        [self loadContents];
+    [self addSubview:self.scrollView];
+    [self bringSubviewToFront:self.pageControl];
+    [self startSliding];
+}
 - (void)loadImages
 {
     for (int i = 0; i < self.imageCount; i++) {
@@ -47,20 +47,25 @@
         [self.scrollView addSubview:imageView];
         [self.imageViews addObject:imageView];
 
-        //获取图片
-        UIImage* image = [self.dataSource imageForSliderAtIndex:i];
-        if (image != nil)
-            imageView.image = image;
+        //委托获取图片
+        if ([self.dataSource respondsToSelector:@selector(imageForSliderAtIndex:)]) {
+            UIImage* image = [self.dataSource imageForSliderAtIndex:i];
+            if (image != nil)
+                imageView.image = image;
+        }
     }
 }
 - (void)loadContents
 {
     for (int i = 0; i < self.imageCount; i++) {
+        //委托获取内容
         NSString* content = [self.dataSource contentForSliderAtIndex:i];
         if (content == nil)
             continue;
     }
 }
+
+#pragma mark - getters
 - (UIPageControl*)pageControl
 {
     if (_pageControl == nil) {
@@ -83,12 +88,12 @@
 - (UIScrollView*)scrollView
 {
     if (_scrollView == nil) {
-        _scrollView = [[UIScrollView alloc] init];
-        _scrollView.backgroundColor = [UIColor redColor];
+        _scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, self.viewSize.width, self.viewSize.height)];
 
         [_scrollView
             setContentSize:CGSizeMake(self.viewSize.width * self.imageCount,
                                self.viewSize.height)];
+        _scrollView.backgroundColor = [UIColor redColor];
         [_scrollView setPagingEnabled:true];
 
         UIButton* button = [[UIButton alloc]
@@ -109,15 +114,16 @@
     }
     return _scrollView;
 }
-#pragma mark - getters
-- (NSUInteger)imageCount
-{
-    return [self.dataSource numberOfItemsInSliderView];
-}
-
 - (CGSize)viewSize
 {
-    return self.scrollView.bounds.size;
+    return self.bounds.size;
+}
+- (NSUInteger)imageCount
+{
+    if (_imageCount == 0) {
+        _imageCount = [self.dataSource numberOfItemsInSliderView];
+    }
+    return _imageCount;
 }
 
 - (NSUInteger)pageIndex
@@ -135,8 +141,26 @@
 - (void)setImage:(UIImage*)image atIndex:(NSUInteger)index
 {
     UIImageView* imageView = self.imageViews[index];
-    if (imageView != nil)
-        imageView.image = image;
+    if (imageView != nil) {
+        //CGRect position = imageView.frame;
+        [imageView setImage:image];
+        [imageView setNeedsDisplay];
+        [self setNeedsDisplay];
+        [self.scrollView setNeedsDisplay];
+    }
+}
+- (void)stopSliding
+{
+    [self.timer invalidate];
+}
+- (void)startSliding
+{
+    self.timer =
+        [NSTimer scheduledTimerWithTimeInterval:1.5
+                                         target:self
+                                       selector:@selector(intervalTriggered)
+                                       userInfo:nil
+                                        repeats:true];
 }
 #pragma mark - slider click event
 - (void)sliderClicked
@@ -146,15 +170,7 @@
 }
 
 #pragma mark - Timer
-- (void)startTimer
-{
-    self.timer =
-        [NSTimer scheduledTimerWithTimeInterval:1.5
-                                         target:self
-                                       selector:@selector(intervalTriggered)
-                                       userInfo:nil
-                                        repeats:true];
-}
+
 - (void)intervalTriggered
 {
     int pageIndex = (self.pageControl.currentPage + 1) % self.imageCount;
@@ -179,10 +195,11 @@
                   willDecelerate:(BOOL)decelerate
 {
     //拖拽结束重新开始
-    [self startTimer];
+    [self startSliding];
 }
 - (void)scrollViewDidEndDecelerating:(UIScrollView*)scrollView
 {
     self.pageControl.currentPage = self.pageIndex;
 }
+
 @end

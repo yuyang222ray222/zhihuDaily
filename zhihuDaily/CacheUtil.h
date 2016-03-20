@@ -19,11 +19,34 @@ extern NSString* const kDataPath;
  */
 @interface CacheUtil : NSObject
 @property (strong, nonatomic) NSMutableDictionary* dataDic;
-
 + (instancetype)cache;
 
+/**
+ *  缓存图片
+ *
+ *  @param key        key
+ *  @param url        图片地址
+ *  @param completion 回调
+ */
 - (void)cacheImageWithKey:(NSString*)key andUrl:(NSString*)url completion:(void (^)(UIImage* image))completion;
+/**
+ *  根据key获取图片
+ *
+ *  @param key <#key description#>
+ *
+ *  @return <#return value description#>
+ */
 - (UIImage*)imageWithKey:(NSString*)key;
+/**
+ *  根据key获取CachedImages实例
+ *
+ *  @param key <#key description#>
+ *
+ *  @return <#return value description#>
+ */
 - (CachedImages*)cachedImageWithKey:(NSString*)key;
+/**
+ *  保存缓存
+ */
 - (void)saveData;
 @end

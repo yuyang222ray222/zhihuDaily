@@ -115,9 +115,12 @@ NSString* const kDataPath = @"data.plist";
                 [self.cachedImagesDic setObject:@{ DATAKEY_CACHEDIMAGES_URL : url,
                     DATAKEY_CACHEDIMAGES_FILENAME : fileName }
                                          forKey:key];
-                [self saveData];
-                if (completion)
-                    completion(image);
+                if (completion != nil) {
+                    //TODO: 一定要记住回到主线程啊。。。
+                    [[GCDUtil mainQueue] async:^{
+                        completion(image);
+                    }];
+                }
             }
             else
                 NSLog(@"Fail to save image %@", error.localizedDescription);

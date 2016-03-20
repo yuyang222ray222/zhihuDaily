@@ -27,6 +27,14 @@
     return YES;
 }
 
+- (void)applicationWillTerminate:(UIApplication*)application
+{
+    [[CacheUtil cache] saveData];
+}
+- (void)applicationWillResignActive:(UIApplication*)application
+{
+    [[CacheUtil cache] saveData];
+}
 - (void)cacheStartImage
 {
     NSString* imageApiUrl =
