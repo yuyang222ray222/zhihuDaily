@@ -35,7 +35,7 @@
 - (void)loadSliderViewImages
 {
     CacheUtil* util = [CacheUtil cache];
-    [self.stories enumerateObjectsUsingBlock:^(Stories* stories, NSUInteger idx, BOOL* _Nonnull stop) {
+    [self.stories enumerateObjectsUsingBlock:^(Stories* stories, NSUInteger idx, BOOL* stop) {
         NSString* url = stories.image;
         if ([util imageWithKey:url] == nil)
             [util cacheImageWithKey:url andUrl:url completion:^(UIImage* image) {
@@ -50,5 +50,8 @@
 {
     return self.stories.count;
 }
-
+- (NSString*)contentForSliderAtIndex:(NSInteger)index
+{
+    return self.stories[index].title;
+}
 @end

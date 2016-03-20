@@ -7,6 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+
+extern NSInteger const kContentOffsetY;
+
 @protocol SliderViewDataSource <NSObject>
 @required
 /**
@@ -44,6 +47,9 @@
 @interface SliderView : UIView
 @property (weak, nonatomic) id<SliderViewDataSource> dataSource;
 
+/**
+ *  构建SliderView
+ */
 - (void)buildSliderView;
 
 - (void)stopSliding;

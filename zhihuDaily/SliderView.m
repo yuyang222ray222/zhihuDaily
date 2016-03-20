@@ -6,7 +6,11 @@
 //  Copyright © 2016年 siegrain.zhihuDaily. All rights reserved.
 //
 
+#import "GradientView.h"
 #import "SliderView.h"
+
+const NSInteger kContentOffsetY = -120;
+
 @interface SliderView () <UIScrollViewDelegate>
 @property (strong, nonatomic) UIScrollView* scrollView;
 @property (strong, nonatomic) UIPageControl* pageControl;
@@ -31,11 +35,16 @@
 - (void)buildSliderView
 {
     [self loadImages];
-    if ([self.dataSource respondsToSelector:@selector(contentForSliderAtIndex:)])
-        [self loadContents];
+    [self loadContents];
     [self addSubview:self.scrollView];
+
+    //以下内容在imagecount大于1时才会初始化
     [self bringSubviewToFront:self.pageControl];
     [self startSliding];
+
+    NSNotificationCenter* nc = [NSNotificationCenter defaultCenter];
+    [nc addObserver:self selector:@selector(stopSliding) name:UIApplicationWillResignActiveNotification object:nil];
+    [nc addObserver:self selector:@selector(startSliding) name:UIApplicationDidBecomeActiveNotification object:nil];
 }
 - (void)loadImages
 {
@@ -59,18 +68,35 @@
 }
 - (void)loadContents
 {
+    if (![self.dataSource respondsToSelector:@selector(contentForSliderAtIndex:)])
+        return;
+
     for (int i = 0; i < self.imageCount; i++) {
         //委托获取内容
         NSString* content = [self.dataSource contentForSliderAtIndex:i];
         if (content == nil)
             continue;
+
+        GradientView* gradientView = [[GradientView alloc] initWithFrame:CGRectMake(i * self.viewSize.width, labs(kContentOffsetY), self.viewSize.width, self.viewSize.height + kContentOffsetY)];
+        UILabel* label = [[UILabel alloc] initWithFrame:CGRectMake(10, 100, self.viewSize.width - 20, 50)];
+        label.textColor = [UIColor whiteColor];
+        label.font = [UIFont systemFontOfSize:20 weight:0.3];
+        label.shadowOffset = CGSizeMake(0, 1);
+        label.shadowColor = [UIColor blackColor];
+        label.numberOfLines = 2;
+        label.text = content;
+        [label sizeToFit];
+
+        [gradientView addSubview:label];
+        [self.scrollView addSubview:gradientView];
     }
 }
-
 - (UIPageControl*)pageControl
 {
     if (_pageControl == nil) {
         _pageControl = [[UIPageControl alloc] init];
+        if (self.imageCount <= 1)
+            return _pageControl;
 
         _pageControl.numberOfPages = self.imageCount;
         CGSize pagerSize = [_pageControl sizeForNumberOfPages:self.imageCount];
@@ -158,6 +184,9 @@
 }
 - (void)startSliding
 {
+    if (self.imageCount <= 1)
+        return;
+
     self.timer =
         [NSTimer scheduledTimerWithTimeInterval:1.5
                                          target:self
@@ -188,7 +217,6 @@
 }
 
 #pragma mark - ScrollView delegate methods
-
 - (void)scrollViewWillBeginDragging:(UIScrollView*)scrollView
 {
     //拖拽时停止计时器

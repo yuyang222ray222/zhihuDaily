@@ -18,8 +18,6 @@
 #import "Stories.h"
 #import "zhihuDailyAPI.h"
 
-static const NSInteger kContentOffsetY = 120;
-
 @interface MainViewController ()
 @property (copy, nonatomic) NSArray<Stories*>* topStories;
 @property (strong, nonatomic) NSMutableArray<Stories*>* stories;
@@ -42,7 +40,7 @@ static const NSInteger kContentOffsetY = 120;
 - (SliderViewController*)sliderViewController
 {
     if (_sliderViewController == nil) {
-        _sliderViewController = [[SliderViewController alloc] initWithFrame:CGRectMake(0, -kContentOffsetY, self.view.bounds.size.width, 180 + kContentOffsetY) andStories:self.topStories];
+        _sliderViewController = [[SliderViewController alloc] initWithFrame:CGRectMake(0, kContentOffsetY, self.view.bounds.size.width, 180 + labs(kContentOffsetY)) andStories:self.topStories];
     }
     return _sliderViewController;
 }
@@ -63,7 +61,7 @@ static const NSInteger kContentOffsetY = 120;
 {
     [self addChildViewController:self.sliderViewController];
     self.tableView.tableHeaderView = self.sliderViewController.view;
-    self.tableView.bounds = CGRectMake(0, -kContentOffsetY, self.view.bounds.size.width, self.view.bounds.size.height + kContentOffsetY);
+    self.tableView.bounds = CGRectMake(0, kContentOffsetY, self.view.bounds.size.width, self.view.bounds.size.height + labs(kContentOffsetY));
 }
 
 #pragma mark - 加载、初始化数据
