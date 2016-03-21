@@ -33,7 +33,6 @@ AppDelegate ()
 - (void)changeRootViewController:(UIViewController*)viewController
                          animate:(BOOL)animate
 {
-
   if (!self.window.rootViewController || !animate) {
     self.window.rootViewController = viewController;
     return;
@@ -45,13 +44,13 @@ AppDelegate ()
 
   self.window.rootViewController = viewController;
 
-  [UIView animateWithDuration:0.5
+  [UIView animateWithDuration:1
     animations:^{
-      snapShot.layer.transform = CATransform3DMakeScale(1.5, 1.5, 1.5);
       snapShot.layer.opacity = 0;
     }
     completion:^(BOOL finished) {
       [snapShot removeFromSuperview];
+      [self.window makeKeyAndVisible];
     }];
 }
 

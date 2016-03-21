@@ -27,39 +27,30 @@ LoadingViewController ()
 @end
 
 @implementation LoadingViewController
-+ (CATransition*)fadeTransition
-{
-  static CATransition* transition = nil;
-  @synchronized(self)
-  {
-    if (transition == nil) {
-      transition = [CATransition animation];
-      transition.duration = 1.5;
-      transition.type = kCATransitionFade;
-    }
-  }
-  return transition;
-}
-
 - (void)viewDidLoad
 {
   [super viewDidLoad];
 
-  MainViewController* mainVC = [[MainViewController alloc] init];
+  [UIView animateWithDuration:2
+                        delay:0.0
+                      options:(UIViewAnimationOptionTransitionCrossDissolve)
+                   animations:^{
+                     self.startImage.layer.transform =
+                       CATransform3DMakeScale(1.1, 1.1, 1.1);
+                   }
+                   completion:nil];
+
+  UIStoryboard* storyboard =
+    [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+  UINavigationController* viewController = [storyboard
+    instantiateViewControllerWithIdentifier:@"RootNavigationController"];
   AppDelegate* delegate = [UIApplication sharedApplication].delegate;
-  dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)),
+  dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)),
                  dispatch_get_main_queue(), ^{
-                   [delegate changeRootViewController:mainVC animate:false];
+                   [delegate changeRootViewController:viewController
+                                              animate:true];
                  });
-  //
-  //  dispatch_after(
-  //    dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)),
-  //    dispatch_get_main_queue(), ^{
-  //      [self.view.window.layer
-  //        addAnimation:[LoadingViewController fadeTransition]
-  //              forKey:kCATransition];
-  //      [self presentViewController:mainVC animated:true completion:nil];
-  //    });
+  //下面这段是通过present出来的控制器，会有tableview设置style无效的bug
   //    dispatch_after(
   //      dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)),
   //      dispatch_get_main_queue(), ^{
