@@ -9,5 +9,5 @@
 #import <UIKit/UIKit.h>
 
 @interface MainViewController : UITableViewController
-
++ (UIColor*)themeColor;
 @end

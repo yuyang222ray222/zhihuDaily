@@ -11,6 +11,7 @@
 		F9624F841C9EA85F00CEDC42 /* StoriesTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F9624F821C9EA85F00CEDC42 /* StoriesTableViewCell.m */; };
 		F9624F851C9EA85F00CEDC42 /* StoriesTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F9624F831C9EA85F00CEDC42 /* StoriesTableViewCell.xib */; };
 		F96E510E1C9FE20800638023 /* Constants.m in Sources */ = {isa = PBXBuildFile; fileRef = F96E510D1C9FE20800638023 /* Constants.m */; };
+		F96E51111C9FEA6000638023 /* StoriesHeaderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F96E51101C9FEA6000638023 /* StoriesHeaderCell.m */; };
 		F99C9FA21C9AE1CA003A0E91 /* CachedImages.m in Sources */ = {isa = PBXBuildFile; fileRef = F99C9FA11C9AE1CA003A0E91 /* CachedImages.m */; };
 		F99C9FA51C9B017D003A0E91 /* MD5Util.m in Sources */ = {isa = PBXBuildFile; fileRef = F99C9FA41C9B017D003A0E91 /* MD5Util.m */; };
 		F99FFA041C9A8BBA0025C736 /* GradientView.m in Sources */ = {isa = PBXBuildFile; fileRef = F99FFA031C9A8BBA0025C736 /* GradientView.m */; };
@@ -59,6 +60,8 @@
 		F9624F831C9EA85F00CEDC42 /* StoriesTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = StoriesTableViewCell.xib; sourceTree = "<group>"; };
 		F96E510C1C9FE20800638023 /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
 		F96E510D1C9FE20800638023 /* Constants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Constants.m; sourceTree = "<group>"; };
+		F96E510F1C9FEA6000638023 /* StoriesHeaderCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StoriesHeaderCell.h; sourceTree = "<group>"; };
+		F96E51101C9FEA6000638023 /* StoriesHeaderCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StoriesHeaderCell.m; sourceTree = "<group>"; };
 		F99C9FA01C9AE1CA003A0E91 /* CachedImages.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CachedImages.h; sourceTree = "<group>"; };
 		F99C9FA11C9AE1CA003A0E91 /* CachedImages.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CachedImages.m; sourceTree = "<group>"; };
 		F99C9FA31C9B017D003A0E91 /* MD5Util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MD5Util.h; sourceTree = "<group>"; };
@@ -238,6 +241,8 @@
 				F9624F811C9EA85F00CEDC42 /* StoriesTableViewCell.h */,
 				F9624F821C9EA85F00CEDC42 /* StoriesTableViewCell.m */,
 				F9624F831C9EA85F00CEDC42 /* StoriesTableViewCell.xib */,
+				F96E510F1C9FEA6000638023 /* StoriesHeaderCell.h */,
+				F96E51101C9FEA6000638023 /* StoriesHeaderCell.m */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -428,6 +433,7 @@
 				F9624F841C9EA85F00CEDC42 /* StoriesTableViewCell.m in Sources */,
 				F9FE52CB1C99380500C598A1 /* GCDUtil.m in Sources */,
 				F9EB59A01C9DA86D00E54379 /* SliderView.m in Sources */,
+				F96E51111C9FEA6000638023 /* StoriesHeaderCell.m in Sources */,
 				F99FFA041C9A8BBA0025C736 /* GradientView.m in Sources */,
 				F9FE52C41C9935A100C598A1 /* Story.m in Sources */,
 				F99C9FA21C9AE1CA003A0E91 /* CachedImages.m in Sources */,
