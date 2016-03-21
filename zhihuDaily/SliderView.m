@@ -9,8 +9,6 @@
 #import "GradientView.h"
 #import "SliderView.h"
 
-const NSInteger kContentOffsetY = -120;
-
 @interface SliderView () <UIScrollViewDelegate>
 @property (strong, nonatomic) UIScrollView* scrollView;
 @property (strong, nonatomic) UIPageControl* pageControl;
@@ -21,6 +19,8 @@ const NSInteger kContentOffsetY = -120;
 
 @property (assign, nonatomic) NSUInteger imageCount;
 @property (strong, nonatomic) NSMutableArray<UIImageView*>* imageViews;
+
+@property (assign, nonatomic) NSInteger contentOffsetY;
 @end
 
 @implementation SliderView
@@ -29,6 +29,7 @@ const NSInteger kContentOffsetY = -120;
 {
     if (self = [super initWithFrame:frame]) {
         self.viewSize = frame.size;
+        self.contentOffsetY = frame.origin.y;
     }
     return self;
 }
@@ -77,7 +78,7 @@ const NSInteger kContentOffsetY = -120;
         if (content == nil)
             continue;
 
-        GradientView* gradientView = [[GradientView alloc] initWithFrame:CGRectMake(i * self.viewSize.width, labs(kContentOffsetY), self.viewSize.width, self.viewSize.height + kContentOffsetY)];
+        GradientView* gradientView = [[GradientView alloc] initWithFrame:CGRectMake(i * self.viewSize.width, labs(self.contentOffsetY), self.viewSize.width, self.viewSize.height + self.contentOffsetY)];
         UILabel* label = [[UILabel alloc] initWithFrame:CGRectMake(10, 100, self.viewSize.width - 20, 50)];
         label.textColor = [UIColor whiteColor];
         label.font = [UIFont systemFontOfSize:20 weight:0.3];
@@ -85,6 +86,7 @@ const NSInteger kContentOffsetY = -120;
         label.shadowColor = [UIColor blackColor];
         label.numberOfLines = 2;
         label.text = content;
+        //由于label的文字是垂直居中，在单行时需要调用该方法适配
         [label sizeToFit];
 
         [gradientView addSubview:label];

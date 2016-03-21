@@ -16,6 +16,7 @@
 @property (strong, nonatomic) NSString* image;
 @property (assign, nonatomic) NSUInteger type;
 @property (assign, nonatomic) NSUInteger identidier;
+@property (assign, nonatomic) BOOL multipic;
 
 - (instancetype)initWithDic:(NSDictionary*)dic;
 + (instancetype)storiesWithDic:(NSDictionary*)dic;

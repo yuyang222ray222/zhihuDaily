@@ -19,6 +19,7 @@
         self.image = dic[@"image"];
         self.type = [dic[@"type"] integerValue];
         self.identidier = [dic[@"id"] integerValue];
+        self.multipic = [dic[@"multipic"] boolValue];
     }
     return self;
 }

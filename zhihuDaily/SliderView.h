@@ -8,8 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-extern NSInteger const kContentOffsetY;
-
 @protocol SliderViewDataSource <NSObject>
 @required
 /**

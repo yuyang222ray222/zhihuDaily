@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		F91CD7B31C99A45E00CBDA28 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F91CD7B21C99A45E00CBDA28 /* LaunchScreen.storyboard */; };
+		F9624F841C9EA85F00CEDC42 /* StoriesTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F9624F821C9EA85F00CEDC42 /* StoriesTableViewCell.m */; };
+		F9624F851C9EA85F00CEDC42 /* StoriesTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F9624F831C9EA85F00CEDC42 /* StoriesTableViewCell.xib */; };
+		F96E510E1C9FE20800638023 /* Constants.m in Sources */ = {isa = PBXBuildFile; fileRef = F96E510D1C9FE20800638023 /* Constants.m */; };
 		F99C9FA21C9AE1CA003A0E91 /* CachedImages.m in Sources */ = {isa = PBXBuildFile; fileRef = F99C9FA11C9AE1CA003A0E91 /* CachedImages.m */; };
 		F99C9FA51C9B017D003A0E91 /* MD5Util.m in Sources */ = {isa = PBXBuildFile; fileRef = F99C9FA41C9B017D003A0E91 /* MD5Util.m */; };
 		F99FFA041C9A8BBA0025C736 /* GradientView.m in Sources */ = {isa = PBXBuildFile; fileRef = F99FFA031C9A8BBA0025C736 /* GradientView.m */; };
@@ -51,6 +54,11 @@
 
 /* Begin PBXFileReference section */
 		F91CD7B21C99A45E00CBDA28 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
+		F9624F811C9EA85F00CEDC42 /* StoriesTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StoriesTableViewCell.h; sourceTree = "<group>"; };
+		F9624F821C9EA85F00CEDC42 /* StoriesTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StoriesTableViewCell.m; sourceTree = "<group>"; };
+		F9624F831C9EA85F00CEDC42 /* StoriesTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = StoriesTableViewCell.xib; sourceTree = "<group>"; };
+		F96E510C1C9FE20800638023 /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
+		F96E510D1C9FE20800638023 /* Constants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Constants.m; sourceTree = "<group>"; };
 		F99C9FA01C9AE1CA003A0E91 /* CachedImages.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CachedImages.h; sourceTree = "<group>"; };
 		F99C9FA11C9AE1CA003A0E91 /* CachedImages.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CachedImages.m; sourceTree = "<group>"; };
 		F99C9FA31C9B017D003A0E91 /* MD5Util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MD5Util.h; sourceTree = "<group>"; };
@@ -227,6 +235,9 @@
 				F99FFA031C9A8BBA0025C736 /* GradientView.m */,
 				F9EB599E1C9DA86D00E54379 /* SliderView.h */,
 				F9EB599F1C9DA86D00E54379 /* SliderView.m */,
+				F9624F811C9EA85F00CEDC42 /* StoriesTableViewCell.h */,
+				F9624F821C9EA85F00CEDC42 /* StoriesTableViewCell.m */,
+				F9624F831C9EA85F00CEDC42 /* StoriesTableViewCell.xib */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -261,6 +272,8 @@
 				F9FE52DB1C998FFB00C598A1 /* DateUtil.m */,
 				F99C9FA31C9B017D003A0E91 /* MD5Util.h */,
 				F99C9FA41C9B017D003A0E91 /* MD5Util.m */,
+				F96E510C1C9FE20800638023 /* Constants.h */,
+				F96E510D1C9FE20800638023 /* Constants.m */,
 			);
 			name = Util;
 			sourceTree = "<group>";
@@ -375,6 +388,7 @@
 				F91CD7B31C99A45E00CBDA28 /* LaunchScreen.storyboard in Resources */,
 				F9FE52891C9844CC00C598A1 /* Assets.xcassets in Resources */,
 				F9FE52841C9844CC00C598A1 /* Main.storyboard in Resources */,
+				F9624F851C9EA85F00CEDC42 /* StoriesTableViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -411,11 +425,13 @@
 				F9FE527B1C9844CC00C598A1 /* main.m in Sources */,
 				F9FE52D61C996B8E00C598A1 /* TestViewController.m in Sources */,
 				F9FE52B51C984DB800C598A1 /* SliderViewController.m in Sources */,
+				F9624F841C9EA85F00CEDC42 /* StoriesTableViewCell.m in Sources */,
 				F9FE52CB1C99380500C598A1 /* GCDUtil.m in Sources */,
 				F9EB59A01C9DA86D00E54379 /* SliderView.m in Sources */,
 				F99FFA041C9A8BBA0025C736 /* GradientView.m in Sources */,
 				F9FE52C41C9935A100C598A1 /* Story.m in Sources */,
 				F99C9FA21C9AE1CA003A0E91 /* CachedImages.m in Sources */,
+				F96E510E1C9FE20800638023 /* Constants.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -548,6 +564,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = zhihuDaily/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = Siegrain.zhihuDaily;
@@ -560,6 +577,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = zhihuDaily/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = Siegrain.zhihuDaily;

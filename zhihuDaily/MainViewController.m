@@ -16,20 +16,34 @@
 #import "SliderView.h"
 #import "SliderViewController.h"
 #import "Stories.h"
+#import "StoriesTableViewCell.h"
 #import "zhihuDailyAPI.h"
+
+static NSString* const kStoriesIdentifier = @"stories";
 
 @interface MainViewController ()
 @property (copy, nonatomic) NSArray<Stories*>* topStories;
-@property (strong, nonatomic) NSMutableArray<Stories*>* stories;
+@property (strong, nonatomic) NSMutableDictionary* stories;
 @property (strong, nonatomic) NSMutableArray* dates;
 
 @property (strong, nonatomic) SliderViewController* sliderViewController;
 
 @property (assign, nonatomic) BOOL isLoaded;
+@property (strong, nonatomic) UIColor* themeColor;
+
+@property (assign, nonatomic) NSUInteger sliderDisplayHeight;
+@property (assign, nonatomic) NSInteger sliderOffsetY;
 @end
 
 @implementation MainViewController
 #pragma mark - getters
+- (NSMutableDictionary*)stories
+{
+    if (_stories == nil) {
+        _stories = [NSMutableDictionary dictionary];
+    }
+    return _stories;
+}
 - (NSMutableArray*)dates
 {
     if (_dates == nil) {
@@ -37,12 +51,27 @@
     }
     return _dates;
 }
+- (NSInteger)sliderOffsetY
+{
+    return -120;
+}
+- (NSUInteger)sliderDisplayHeight
+{
+    return 230;
+}
 - (SliderViewController*)sliderViewController
 {
     if (_sliderViewController == nil) {
-        _sliderViewController = [[SliderViewController alloc] initWithFrame:CGRectMake(0, kContentOffsetY, self.view.bounds.size.width, 180 + labs(kContentOffsetY)) andStories:self.topStories];
+        _sliderViewController = [[SliderViewController alloc] initWithFrame:CGRectMake(0, self.sliderOffsetY, self.view.bounds.size.width, self.sliderDisplayHeight + labs(self.sliderOffsetY)) andStories:self.topStories];
     }
     return _sliderViewController;
+}
+- (UIColor*)themeColor
+{
+    if (_themeColor == nil) {
+        _themeColor = [UIColor colorWithRed:51 green:153 blue:230 alpha:1];
+    }
+    return _themeColor;
 }
 #pragma mark - init
 - (void)viewDidLoad
@@ -56,36 +85,69 @@
 - (void)buildMainPage
 {
     [self loadData];
+    [self buildTableView];
 }
 - (void)buildSliderView
 {
     [self addChildViewController:self.sliderViewController];
     self.tableView.tableHeaderView = self.sliderViewController.view;
-    self.tableView.bounds = CGRectMake(0, kContentOffsetY, self.view.bounds.size.width, self.view.bounds.size.height + labs(kContentOffsetY));
+    self.tableView.contentInset = UIEdgeInsetsMake(self.sliderOffsetY, 0, 0, 0);
 }
+- (void)buildTableView
+{
+    [self.tableView registerNib:[UINib nibWithNibName:@"StoriesTableViewCell" bundle:nil] forCellReuseIdentifier:kStoriesIdentifier];
+    self.tableView.rowHeight = 90;
+}
+#pragma mark - tableview datasource
+- (NSInteger)numberOfSectionsInTableView:(UITableView*)tableView
+{
+    NSLog(@"%ld", self.stories.count);
+    return self.stories.count;
+}
+- (NSInteger)tableView:(UITableView*)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return [self.stories[self.dates[section]] count];
+}
+- (UIView*)tableView:(UITableView*)tableView viewForHeaderInSection:(NSInteger)section
+{
+    UIView* view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 20)];
+    view.backgroundColor = self.themeColor;
 
+    UILabel* label = [[UILabel alloc] initWithFrame:view.frame];
+    label.textAlignment = NSTextAlignmentCenter;
+    label.text = [DateUtil dateString:self.dates[section] fromFormat:@"yyyyMMdd" toFormat:@"MM月dd日 EEEE"];
+    label.textColor = [UIColor whiteColor];
+
+    [view addSubview:label];
+    return view;
+}
+- (UITableViewCell*)tableView:(UITableView*)tableView cellForRowAtIndexPath:(NSIndexPath*)indexPath
+{
+    StoriesTableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:kStoriesIdentifier forIndexPath:indexPath];
+    NSArray<Stories*>* storiesOfADay = self.stories[self.dates[indexPath.section]];
+    cell.stories = storiesOfADay[indexPath.row];
+
+    return cell;
+}
 #pragma mark - 加载、初始化数据
 - (void)loadData
 {
     [APIRequest
         requestWithUrl:API_Url_NewsLatest
             completion:^(id data, NSString* md5) {
-                //获取缓存
                 CacheUtil* util = [CacheUtil cache];
 
                 NSMutableDictionary* dic = [NSMutableDictionary dictionaryWithDictionary:[APIRequest objToDic:data]];
                 NSString* date = dic[DATAKEY_STORIES_DATE];
-                //如果没有缓存，就缓存下来
                 if (util.dataDic[date] == nil) {
                     [dic setValue:md5 forKey:DATAKEY_STORIES_SIGNATURE];
                     [util.dataDic setObject:dic forKey:date];
 
                     self.isLoaded = false;
                 }
-                //如果有缓存，验证签名
                 else {
                     NSDictionary* cachedDic = util.dataDic[date];
-                    //签名不一样就缓存
+                    //compare signature
                     if (![cachedDic[DATAKEY_STORIES_SIGNATURE] isEqualToString:md5]) {
                         [dic setValue:md5 forKey:DATAKEY_STORIES_SIGNATURE];
                         [util.dataDic setObject:dic forKey:date];
@@ -100,19 +162,15 @@
 
                     //数据加载完后构建SliderView
                     [self buildSliderView];
+                    [self.tableView reloadData];
                 }
             }];
 }
 - (void)initDataWithDic:(NSDictionary*)dic
 {
     self.topStories = [Stories stories:dic[DATAKEY_STORIES_TOPSTORIES]];
-    [self.stories addObjectsFromArray:[Stories stories:dic[DATAKEY_STORIES_STORIES]]];
-
-    NSDate* date = [DateUtil stringToDate:dic[DATAKEY_STORIES_DATE] format:@"yyyyMMdd"];
-    NSString* dateStrWithWeek = [DateUtil appendWeekStringFromDate:date withFormat:@"MM月dd日 "];
-    [self.dates addObject:dateStrWithWeek];
-
-    NSLog(@"主页数据读取完毕");
+    [self.stories setObject:[Stories stories:dic[DATAKEY_STORIES_STORIES]] forKey:dic[DATAKEY_STORIES_DATE]];
+    [self.dates addObject:dic[DATAKEY_STORIES_DATE]];
 }
 
 #pragma mark - scrollview delegate
@@ -128,9 +186,9 @@
 - (void)scrollViewDidScroll:(UIScrollView*)scrollView
 {
     //限制scrollview的bounce size
-    if (scrollView.contentOffset.y <= -50) {
+    if (scrollView.contentOffset.y <= 0) {
         CGPoint offset = scrollView.contentOffset;
-        offset.y = -50;
+        offset.y = 0;
         scrollView.contentOffset = offset;
     }
 }
