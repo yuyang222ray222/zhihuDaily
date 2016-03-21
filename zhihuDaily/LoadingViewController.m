@@ -31,6 +31,7 @@ LoadingViewController ()
 {
   [super viewDidLoad];
 
+  //放大动画
   [UIView animateWithDuration:2
                         delay:0.0
                       options:(UIViewAnimationOptionTransitionCrossDissolve)
@@ -40,6 +41,7 @@ LoadingViewController ()
                    }
                    completion:nil];
 
+  //跳转
   UIStoryboard* storyboard =
     [UIStoryboard storyboardWithName:@"Main" bundle:nil];
   UINavigationController* viewController = [storyboard
