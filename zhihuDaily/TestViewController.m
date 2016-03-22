@@ -9,7 +9,7 @@
 #import "APIRequest.h"
 #import "StartImage.h"
 #import "TestViewController.h"
-#import "zhihuDailyAPI.h"
+#import "APIDataSource.h"
 
 @interface TestViewController ()
 @property (strong, nonatomic) IBOutlet UIImageView* startImage;

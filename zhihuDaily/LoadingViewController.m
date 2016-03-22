@@ -15,7 +15,7 @@
 #import "LoadingViewController.h"
 #import "MainViewController.h"
 #import "StartImage.h"
-#import "zhihuDailyAPI.h"
+#import "APIDataSource.h"
 
 @interface
 LoadingViewController ()

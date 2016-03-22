@@ -10,8 +10,8 @@
 		F91CD7B31C99A45E00CBDA28 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F91CD7B21C99A45E00CBDA28 /* LaunchScreen.storyboard */; };
 		F9624F841C9EA85F00CEDC42 /* StoriesTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F9624F821C9EA85F00CEDC42 /* StoriesTableViewCell.m */; };
 		F9624F851C9EA85F00CEDC42 /* StoriesTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F9624F831C9EA85F00CEDC42 /* StoriesTableViewCell.xib */; };
-		F96E510E1C9FE20800638023 /* Constants.m in Sources */ = {isa = PBXBuildFile; fileRef = F96E510D1C9FE20800638023 /* Constants.m */; };
 		F96E51111C9FEA6000638023 /* StoriesHeaderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F96E51101C9FEA6000638023 /* StoriesHeaderCell.m */; };
+		F99B20B91CA1AE9400D96DB6 /* APIDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = F99B20B81CA1AE9400D96DB6 /* APIDataSource.m */; };
 		F99C9FA21C9AE1CA003A0E91 /* CachedImages.m in Sources */ = {isa = PBXBuildFile; fileRef = F99C9FA11C9AE1CA003A0E91 /* CachedImages.m */; };
 		F99C9FA51C9B017D003A0E91 /* MD5Util.m in Sources */ = {isa = PBXBuildFile; fileRef = F99C9FA41C9B017D003A0E91 /* MD5Util.m */; };
 		F99FFA041C9A8BBA0025C736 /* GradientView.m in Sources */ = {isa = PBXBuildFile; fileRef = F99FFA031C9A8BBA0025C736 /* GradientView.m */; };
@@ -59,10 +59,9 @@
 		F9624F811C9EA85F00CEDC42 /* StoriesTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StoriesTableViewCell.h; sourceTree = "<group>"; };
 		F9624F821C9EA85F00CEDC42 /* StoriesTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StoriesTableViewCell.m; sourceTree = "<group>"; };
 		F9624F831C9EA85F00CEDC42 /* StoriesTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = StoriesTableViewCell.xib; sourceTree = "<group>"; };
-		F96E510C1C9FE20800638023 /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
-		F96E510D1C9FE20800638023 /* Constants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Constants.m; sourceTree = "<group>"; };
 		F96E510F1C9FEA6000638023 /* StoriesHeaderCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StoriesHeaderCell.h; sourceTree = "<group>"; };
 		F96E51101C9FEA6000638023 /* StoriesHeaderCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StoriesHeaderCell.m; sourceTree = "<group>"; };
+		F99B20B81CA1AE9400D96DB6 /* APIDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APIDataSource.m; sourceTree = "<group>"; };
 		F99C9FA01C9AE1CA003A0E91 /* CachedImages.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CachedImages.h; sourceTree = "<group>"; };
 		F99C9FA11C9AE1CA003A0E91 /* CachedImages.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CachedImages.m; sourceTree = "<group>"; };
 		F99C9FA31C9B017D003A0E91 /* MD5Util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MD5Util.h; sourceTree = "<group>"; };
@@ -93,7 +92,7 @@
 		F9FE52B41C984DB800C598A1 /* SliderViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SliderViewController.m; sourceTree = "<group>"; };
 		F9FE52B61C98738000C598A1 /* Stories.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Stories.h; sourceTree = "<group>"; };
 		F9FE52B71C98738000C598A1 /* Stories.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Stories.m; sourceTree = "<group>"; };
-		F9FE52BF1C9931B100C598A1 /* zhihuDailyAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = zhihuDailyAPI.h; sourceTree = "<group>"; };
+		F9FE52BF1C9931B100C598A1 /* APIDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APIDataSource.h; sourceTree = "<group>"; };
 		F9FE52C21C9935A100C598A1 /* Story.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Story.h; sourceTree = "<group>"; };
 		F9FE52C31C9935A100C598A1 /* Story.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Story.m; sourceTree = "<group>"; };
 		F9FE52C61C99369500C598A1 /* APIRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APIRequest.h; sourceTree = "<group>"; };
@@ -170,8 +169,7 @@
 		F9FE52781C9844CC00C598A1 /* zhihuDaily */ = {
 			isa = PBXGroup;
 			children = (
-				F9FE52C51C99365000C598A1 /* Util */,
-				F9FE52BE1C99315B00C598A1 /* WebAPI */,
+				F9FE52C51C99365000C598A1 /* Utility */,
 				F9FE52B21C98463400C598A1 /* Others */,
 				F9B5F15B1CA17FD90049FE9E /* Category */,
 				F9FE52B11C98455F00C598A1 /* View */,
@@ -213,6 +211,7 @@
 		F9FE52AF1C9844E700C598A1 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				F9FE52BE1C99315B00C598A1 /* WebAPI */,
 				F9E2CB791C9AAC0B00F02856 /* DataKeys.m */,
 				F9FE52B61C98738000C598A1 /* Stories.h */,
 				F9FE52B71C98738000C598A1 /* Stories.m */,
@@ -272,12 +271,13 @@
 		F9FE52BE1C99315B00C598A1 /* WebAPI */ = {
 			isa = PBXGroup;
 			children = (
-				F9FE52BF1C9931B100C598A1 /* zhihuDailyAPI.h */,
+				F9FE52BF1C9931B100C598A1 /* APIDataSource.h */,
+				F99B20B81CA1AE9400D96DB6 /* APIDataSource.m */,
 			);
 			name = WebAPI;
 			sourceTree = "<group>";
 		};
-		F9FE52C51C99365000C598A1 /* Util */ = {
+		F9FE52C51C99365000C598A1 /* Utility */ = {
 			isa = PBXGroup;
 			children = (
 				F9FE52C61C99369500C598A1 /* APIRequest.h */,
@@ -290,10 +290,8 @@
 				F9FE52DB1C998FFB00C598A1 /* DateUtil.m */,
 				F99C9FA31C9B017D003A0E91 /* MD5Util.h */,
 				F99C9FA41C9B017D003A0E91 /* MD5Util.m */,
-				F96E510C1C9FE20800638023 /* Constants.h */,
-				F96E510D1C9FE20800638023 /* Constants.m */,
 			);
-			name = Util;
+			name = Utility;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -434,6 +432,7 @@
 				F9FE52811C9844CC00C598A1 /* MainViewController.m in Sources */,
 				F9FE52B81C98738000C598A1 /* Stories.m in Sources */,
 				F9FE52CE1C99557100C598A1 /* StartImage.m in Sources */,
+				F99B20B91CA1AE9400D96DB6 /* APIDataSource.m in Sources */,
 				F9FE52C81C99369500C598A1 /* APIRequest.m in Sources */,
 				F9FE52DC1C998FFB00C598A1 /* DateUtil.m in Sources */,
 				F9FE52D91C99773200C598A1 /* CacheUtil.m in Sources */,
@@ -451,7 +450,6 @@
 				F99FFA041C9A8BBA0025C736 /* GradientView.m in Sources */,
 				F9FE52C41C9935A100C598A1 /* Story.m in Sources */,
 				F99C9FA21C9AE1CA003A0E91 /* CachedImages.m in Sources */,
-				F96E510E1C9FE20800638023 /* Constants.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

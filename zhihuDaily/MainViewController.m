@@ -6,6 +6,7 @@
 //  Copyright © 2016年 siegrain.zhihuDaily. All rights reserved.
 //
 
+#import "APIDataSource.h"
 #import "APIRequest.h"
 #import "CacheUtil.h"
 #import "DataKeys.m"
@@ -19,7 +20,6 @@
 #import "StoriesHeaderCell.h"
 #import "StoriesTableViewCell.h"
 #import "UINavigationBar+BackgroundColor.h"
-#import "zhihuDailyAPI.h"
 
 static NSString* const kStoriesIdentifier = @"stories";
 static NSString* const kStoriesHeaderIdentifier = @"storiesHeader";
@@ -27,11 +27,11 @@ static NSUInteger const kHeaderViewHeight = 44;
 
 @interface
 MainViewController ()
+@property (strong, nonatomic) APIDataSource* dataSource;
 
 @property (copy, nonatomic) NSArray<Stories*>* topStories;
 @property (strong, nonatomic) NSMutableDictionary* stories;
 @property (strong, nonatomic) NSMutableArray* dates;
-@property (assign, nonatomic) BOOL isLoaded;
 
 @property (strong, nonatomic) SliderViewController* sliderViewController;
 
@@ -44,6 +44,28 @@ MainViewController ()
 
 @implementation MainViewController
 #pragma mark - getters
+- (APIDataSource*)dataSource
+{
+  if (_dataSource == nil) {
+    _dataSource = [APIDataSource datasource];
+  }
+  return _dataSource;
+}
+- (NSMutableDictionary*)stories
+{
+  if (_stories == nil) {
+    _stories = [NSMutableDictionary dictionary];
+  }
+  return _stories;
+}
+- (NSMutableArray*)dates
+{
+  if (_dates == nil) {
+    _dates = [NSMutableArray array];
+  }
+  return _dates;
+}
+
 - (CGSize)viewSize
 {
   return self.view.bounds.size;
@@ -59,20 +81,6 @@ MainViewController ()
                             alpha:1];
   });
   return color;
-}
-- (NSMutableDictionary*)stories
-{
-  if (_stories == nil) {
-    _stories = [NSMutableDictionary dictionary];
-  }
-  return _stories;
-}
-- (NSMutableArray*)dates
-{
-  if (_dates == nil) {
-    _dates = [NSMutableArray array];
-  }
-  return _dates;
 }
 - (NSInteger)sliderInsetY
 {
@@ -103,18 +111,15 @@ MainViewController ()
     [[MainViewController themeColor] colorWithAlphaComponent:alpha];
   return color;
 }
-#pragma mark - init
-
+#pragma mark - initialization
 - (void)viewDidLoad
 {
   [super viewDidLoad];
   [self buildMainPage];
 }
-
-#pragma mark - 构建界面
 - (void)buildMainPage
 {
-  [self loadData];
+  [self loadLatestData];
   [self buildNavigation];
   [self buildTableView];
 }
@@ -165,7 +170,6 @@ MainViewController ()
 
   return header;
 }
-
 - (UITableViewCell*)tableView:(UITableView*)tableView
         cellForRowAtIndexPath:(NSIndexPath*)indexPath
 {
@@ -178,51 +182,22 @@ MainViewController ()
 
   return cell;
 }
-#pragma mark - 加载、初始化数据
-- (void)loadData
+#pragma mark - api datasource
+- (void)loadLatestData
 {
-  [APIRequest
-    requestWithUrl:API_Url_NewsLatest
-        completion:^(id data, NSString* md5) {
-          CacheUtil* util = [CacheUtil cache];
+  [self.dataSource NewsLatest:^(BOOL needsToReload) {
+    if (!needsToReload && self.topStories.count != 0)
+      return;
 
-          NSMutableDictionary* dic = [NSMutableDictionary
-            dictionaryWithDictionary:[APIRequest objToDic:data]];
-          NSString* date = dic[DATAKEY_STORIES_DATE];
-          if (util.dataDic[date] == nil) {
-            [dic setValue:md5 forKey:DATAKEY_STORIES_SIGNATURE];
-            [util.dataDic setObject:dic forKey:date];
+    self.topStories = self.dataSource.topStories;
+    [self.stories setObject:self.dataSource.stories
+                     forKey:self.dataSource.date];
+    [self.dates addObject:self.dataSource.date];
 
-            self.isLoaded = false;
-          } else {
-            NSDictionary* cachedDic = util.dataDic[date];
-            // compare signature
-            if (![cachedDic[DATAKEY_STORIES_SIGNATURE] isEqualToString:md5]) {
-              [dic setValue:md5 forKey:DATAKEY_STORIES_SIGNATURE];
-              [util.dataDic setObject:dic forKey:date];
-
-              self.isLoaded = false;
-            }
-          }
-
-          if (!self.isLoaded) {
-            [self initDataWithDic:dic];
-            self.isLoaded = true;
-
-            //数据加载完后构建SliderView
-            [self buildSliderView];
-            [self.tableView reloadData];
-          }
-        }];
+    [self buildSliderView];
+    [self.tableView reloadData];
+  }];
 }
-- (void)initDataWithDic:(NSDictionary*)dic
-{
-  self.topStories = [Stories stories:dic[DATAKEY_STORIES_TOPSTORIES]];
-  [self.stories setObject:[Stories stories:dic[DATAKEY_STORIES_STORIES]]
-                   forKey:dic[DATAKEY_STORIES_DATE]];
-  [self.dates addObject:dic[DATAKEY_STORIES_DATE]];
-}
-
 #pragma mark - scrollview delegate
 - (void)scrollViewWillBeginDragging:(UIScrollView*)scrollView
 {
@@ -248,7 +223,6 @@ MainViewController ()
 - (void)setNavigationBarTransparent
 {
   self.navigationController.navigationBar.translucent = true;
-  //  self.navigationController.navigationBar.clipsToBounds = true;
 
   UIColor* color = [UIColor clearColor];
   CGRect rect = CGRectMake(0, 0, self.viewSize.width, 64);
@@ -270,8 +244,9 @@ MainViewController ()
   if (self.tableView.contentOffset.y >
       self.sliderDisplayHeight + labs(self.sliderInsetY + 20)) {
     self.tableView.contentInset = UIEdgeInsetsMake(20, 0, 0, 0);
-    self.navigationItem.title = nil;
-    //避免隐藏navigationbar之后被背景layer挡住section header
+    //这里不能直接隐藏navigationbar，会导致tableview的insettop失控
+    self.navigationItem.title = @"";
+    //缩短背景视图避免其挡住section header
     [self.navigationController.navigationBar setBackgroundLayerHeight:20];
   } else {
     self.tableView.contentInset = UIEdgeInsetsMake(self.sliderInsetY, 0, 0, 0);
@@ -281,7 +256,5 @@ MainViewController ()
 
     [self.navigationController.navigationBar setBackgroundLayerHeight:64];
   }
-
-  NSLog(@"%f", self.tableView.contentInset.top);
 }
 @end

@@ -13,7 +13,7 @@
 #import "DataKeys.m"
 #import "LoadingViewController.h"
 #import "StartImage.h"
-#import "zhihuDailyAPI.h"
+#import "APIDataSource.h"
 
 @interface
 AppDelegate ()

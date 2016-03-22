@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@protocol SliderViewDataSource <NSObject>
+@protocol SliderViewDataSource<NSObject>
 @required
 /**
  *  指定Slider的项目数
@@ -44,6 +44,7 @@
 
 @interface SliderView : UIView
 @property (weak, nonatomic) id<SliderViewDataSource> dataSource;
+@property (assign, nonatomic) NSTimeInterval interval;
 
 /**
  *  构建SliderView
