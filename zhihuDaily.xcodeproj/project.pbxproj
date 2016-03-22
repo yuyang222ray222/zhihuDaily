@@ -12,7 +12,7 @@
 		F9624F851C9EA85F00CEDC42 /* StoriesTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F9624F831C9EA85F00CEDC42 /* StoriesTableViewCell.xib */; };
 		F96E51111C9FEA6000638023 /* StoriesHeaderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F96E51101C9FEA6000638023 /* StoriesHeaderCell.m */; };
 		F99B20B91CA1AE9400D96DB6 /* APIDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = F99B20B81CA1AE9400D96DB6 /* APIDataSource.m */; };
-		F99C9FA21C9AE1CA003A0E91 /* CachedImages.m in Sources */ = {isa = PBXBuildFile; fileRef = F99C9FA11C9AE1CA003A0E91 /* CachedImages.m */; };
+		F99C9FA21C9AE1CA003A0E91 /* CachedImage.m in Sources */ = {isa = PBXBuildFile; fileRef = F99C9FA11C9AE1CA003A0E91 /* CachedImage.m */; };
 		F99C9FA51C9B017D003A0E91 /* MD5Util.m in Sources */ = {isa = PBXBuildFile; fileRef = F99C9FA41C9B017D003A0E91 /* MD5Util.m */; };
 		F99FFA041C9A8BBA0025C736 /* GradientView.m in Sources */ = {isa = PBXBuildFile; fileRef = F99FFA031C9A8BBA0025C736 /* GradientView.m */; };
 		F9B5F15E1CA180D00049FE9E /* UINavigationBar+BackgroundColor.m in Sources */ = {isa = PBXBuildFile; fileRef = F9B5F15D1CA180D00049FE9E /* UINavigationBar+BackgroundColor.m */; };
@@ -62,8 +62,8 @@
 		F96E510F1C9FEA6000638023 /* StoriesHeaderCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StoriesHeaderCell.h; sourceTree = "<group>"; };
 		F96E51101C9FEA6000638023 /* StoriesHeaderCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StoriesHeaderCell.m; sourceTree = "<group>"; };
 		F99B20B81CA1AE9400D96DB6 /* APIDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APIDataSource.m; sourceTree = "<group>"; };
-		F99C9FA01C9AE1CA003A0E91 /* CachedImages.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CachedImages.h; sourceTree = "<group>"; };
-		F99C9FA11C9AE1CA003A0E91 /* CachedImages.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CachedImages.m; sourceTree = "<group>"; };
+		F99C9FA01C9AE1CA003A0E91 /* CachedImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CachedImage.h; sourceTree = "<group>"; };
+		F99C9FA11C9AE1CA003A0E91 /* CachedImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CachedImage.m; sourceTree = "<group>"; };
 		F99C9FA31C9B017D003A0E91 /* MD5Util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MD5Util.h; sourceTree = "<group>"; };
 		F99C9FA41C9B017D003A0E91 /* MD5Util.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MD5Util.m; sourceTree = "<group>"; };
 		F99FFA021C9A8BBA0025C736 /* GradientView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GradientView.h; sourceTree = "<group>"; };
@@ -211,16 +211,15 @@
 		F9FE52AF1C9844E700C598A1 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				F9FE52BE1C99315B00C598A1 /* WebAPI */,
-				F9E2CB791C9AAC0B00F02856 /* DataKeys.m */,
+				F9FE52BE1C99315B00C598A1 /* DataSource */,
 				F9FE52B61C98738000C598A1 /* Stories.h */,
 				F9FE52B71C98738000C598A1 /* Stories.m */,
 				F9FE52C21C9935A100C598A1 /* Story.h */,
 				F9FE52C31C9935A100C598A1 /* Story.m */,
 				F9FE52CC1C99557100C598A1 /* StartImage.h */,
 				F9FE52CD1C99557100C598A1 /* StartImage.m */,
-				F99C9FA01C9AE1CA003A0E91 /* CachedImages.h */,
-				F99C9FA11C9AE1CA003A0E91 /* CachedImages.m */,
+				F99C9FA01C9AE1CA003A0E91 /* CachedImage.h */,
+				F99C9FA11C9AE1CA003A0E91 /* CachedImage.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -268,13 +267,14 @@
 			name = Others;
 			sourceTree = "<group>";
 		};
-		F9FE52BE1C99315B00C598A1 /* WebAPI */ = {
+		F9FE52BE1C99315B00C598A1 /* DataSource */ = {
 			isa = PBXGroup;
 			children = (
+				F9E2CB791C9AAC0B00F02856 /* DataKeys.m */,
 				F9FE52BF1C9931B100C598A1 /* APIDataSource.h */,
 				F99B20B81CA1AE9400D96DB6 /* APIDataSource.m */,
 			);
-			name = WebAPI;
+			name = DataSource;
 			sourceTree = "<group>";
 		};
 		F9FE52C51C99365000C598A1 /* Utility */ = {
@@ -449,7 +449,7 @@
 				F96E51111C9FEA6000638023 /* StoriesHeaderCell.m in Sources */,
 				F99FFA041C9A8BBA0025C736 /* GradientView.m in Sources */,
 				F9FE52C41C9935A100C598A1 /* Story.m in Sources */,
-				F99C9FA21C9AE1CA003A0E91 /* CachedImages.m in Sources */,
+				F99C9FA21C9AE1CA003A0E91 /* CachedImage.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

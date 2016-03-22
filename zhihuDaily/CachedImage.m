@@ -6,20 +6,20 @@
 //  Copyright © 2016年 siegrain.zhihuDaily. All rights reserved.
 //
 
-#import "CachedImages.h"
+#import "CachedImage.h"
 
-@implementation CachedImages
+@implementation CachedImage
 - (instancetype)initWithDic:(NSDictionary*)dic
 {
-    self = [super init];
-    if (self) {
-        [self setValuesForKeysWithDictionary:dic];
-    }
-    return self;
+  self = [super init];
+  if (self) {
+    [self setValuesForKeysWithDictionary:dic];
+  }
+  return self;
 }
 
 + (instancetype)cachedImageWithDic:(NSDictionary*)dic
 {
-    return [[self alloc] initWithDic:dic];
+  return [[self alloc] initWithDic:dic];
 }
 @end

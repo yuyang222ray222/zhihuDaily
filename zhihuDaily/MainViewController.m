@@ -47,7 +47,7 @@ MainViewController ()
 - (APIDataSource*)dataSource
 {
   if (_dataSource == nil) {
-    _dataSource = [APIDataSource datasource];
+    _dataSource = [APIDataSource dataSource];
   }
   return _dataSource;
 }
@@ -185,7 +185,7 @@ MainViewController ()
 #pragma mark - api datasource
 - (void)loadLatestData
 {
-  [self.dataSource NewsLatest:^(BOOL needsToReload) {
+  [self.dataSource newsLatest:^(BOOL needsToReload) {
     if (!needsToReload && self.topStories.count != 0)
       return;
 

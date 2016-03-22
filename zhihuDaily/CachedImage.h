@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface CachedImages : NSObject
+@interface CachedImage : NSObject
 @property (copy, nonatomic) NSString* url;
 @property (copy, nonatomic) NSString* fileName;
 

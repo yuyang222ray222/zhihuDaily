@@ -7,7 +7,7 @@
 //
 
 #import "CacheUtil.h"
-#import "CachedImages.h"
+#import "CachedImage.h"
 #import "DataKeys.m"
 #import "DateUtil.h"
 #import "GCDUtil.h"
@@ -129,7 +129,7 @@ NSString* const kDataPath = @"data.plist";
 }
 - (UIImage*)imageWithKey:(NSString*)key
 {
-    CachedImages* model = [self cachedImageWithKey:key];
+    CachedImage* model = [self cachedImageWithKey:key];
     if (model == nil)
         return nil;
 
@@ -141,10 +141,10 @@ NSString* const kDataPath = @"data.plist";
     }
     return nil;
 }
-- (CachedImages*)cachedImageWithKey:(NSString*)key
+- (CachedImage*)cachedImageWithKey:(NSString*)key
 {
     //早知道就用coredata了。。
-    CachedImages* model = [CachedImages cachedImageWithDic:self.cachedImagesDic[key]];
+    CachedImage* model = [CachedImage cachedImageWithDic:self.cachedImagesDic[key]];
     return model.fileName == nil ? nil : model;
 }
 @end

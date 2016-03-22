@@ -12,15 +12,22 @@
 #define API_Url_StartImage @"http://news-at.zhihu.com/api/4/start-image/"
 
 #import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
+
 @class Stories;
 
 @interface APIDataSource : NSObject
-+ (instancetype)datasource;
++ (instancetype)dataSource;
 
-@property (strong, nonatomic, readonly) NSArray<Stories*>* topStories;
+#pragma mark - NewsLatest
+@property (strong, nonatomic) NSArray<Stories*>* topStories;
+@property (strong, nonatomic) NSString* date;
+@property (strong, nonatomic) NSArray* stories;
 
-@property (strong, nonatomic, readonly) NSString* date;
-@property (strong, nonatomic, readonly) NSArray* stories;
+- (void)newsLatest:(void (^)(BOOL needsToReload))completion;
 
-- (void)NewsLatest:(void (^)(BOOL needsToReload))completion;
+#pragma mark - StartImage
+@property (strong, nonatomic) UIImage* startImage;
+@property (strong, nonatomic) NSString* startImageAuthor;
+- (void)startImage:(void (^)(void))completion;
 @end

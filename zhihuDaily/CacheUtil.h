@@ -12,7 +12,7 @@
 extern NSString* const kCacheImagePath;
 extern NSString* const kDataPath;
 
-@class CachedImages;
+@class CachedImage;
 
 /**
  *  缓存单例类
@@ -44,7 +44,7 @@ extern NSString* const kDataPath;
  *
  *  @return <#return value description#>
  */
-- (CachedImages*)cachedImageWithKey:(NSString*)key;
+- (CachedImage*)cachedImageWithKey:(NSString*)key;
 /**
  *  保存缓存
  */

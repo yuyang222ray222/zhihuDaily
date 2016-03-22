@@ -6,14 +6,11 @@
 //  Copyright © 2016年 siegrain.zhihuDaily. All rights reserved.
 //
 
-#import "APIRequest.h"
+#import "APIDataSource.h"
 #import "AppDelegate.h"
 #import "CacheUtil.h"
-#import "CachedImages.h"
-#import "DataKeys.m"
+#import "CachedImage.h"
 #import "LoadingViewController.h"
-#import "StartImage.h"
-#import "APIDataSource.h"
 
 @interface
 AppDelegate ()
@@ -26,7 +23,7 @@ AppDelegate ()
   didFinishLaunchingWithOptions:(NSDictionary*)launchOptions
 {
 
-  [self cacheStartImage];
+  [[APIDataSource dataSource] startImage:nil];
   return YES;
 }
 
@@ -39,7 +36,6 @@ AppDelegate ()
   }
 
   UIView* snapShot = [self.window snapshotViewAfterScreenUpdates:YES];
-
   [viewController.view addSubview:snapShot];
 
   self.window.rootViewController = viewController;
@@ -51,28 +47,6 @@ AppDelegate ()
     completion:^(BOOL finished) {
       [snapShot removeFromSuperview];
     }];
-}
-
-- (void)cacheStartImage
-{
-  NSString* imageApiUrl =
-    [NSString stringWithFormat:@"%@%@", API_Url_StartImage, @"1080*1776"];
-  [APIRequest
-    requestWithUrl:imageApiUrl
-        completion:^(id data, NSString* md5) {
-          StartImage* model =
-            [StartImage startImageWithDic:[APIRequest objToDic:data]];
-          CacheUtil* cache = [CacheUtil cache];
-          CachedImages* cachedImage =
-            [cache cachedImageWithKey:DATAKEY_STARTIMAGE];
-          if ([model.img isEqualToString:cachedImage.url])
-            return;
-
-          [cache cacheImageWithKey:DATAKEY_STARTIMAGE
-                            andUrl:model.img
-                        completion:nil];
-          [cache.dataDic setValue:model.text forKey:DATAKEY_STARTIMAGE_AUTHOR];
-        }];
 }
 
 - (void)applicationWillTerminate:(UIApplication*)application
