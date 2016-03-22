@@ -40,17 +40,17 @@
             </objects>
             <point key="canvasLocation" x="749" y="254"/>
         </scene>
-        <!--热门新闻-->
+        <!--今日热闻-->
         <scene sceneID="WDh-NY-Tvg">
             <objects>
-                <tableViewController id="4hA-Ul-OYg" customClass="MainViewController" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="18" sectionFooterHeight="18" id="1l3-mS-0tW">
+                <tableViewController modalTransitionStyle="crossDissolve" id="4hA-Ul-OYg" customClass="MainViewController" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="1l3-mS-0tW">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="stories" id="LVt-lc-yd5" customClass="StoriesTableViewCell">
-                                <rect key="frame" x="0.0" y="114" width="375" height="44"/>
+                                <rect key="frame" x="0.0" y="92" width="375" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="LVt-lc-yd5" id="vGg-bM-oZb">
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="43"/>
@@ -63,7 +63,8 @@
                             <outlet property="delegate" destination="4hA-Ul-OYg" id="Tts-75-9xB"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="热门新闻" id="hH9-sK-hZC"/>
+                    <navigationItem key="navigationItem" title="今日热闻" id="hH9-sK-hZC"/>
+                    <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Way-VO-AL0" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -73,6 +74,7 @@
         <scene sceneID="yBK-8p-9ib">
             <objects>
                 <navigationController storyboardIdentifier="RootNavigationController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="957-yj-QkM" sceneMemberID="viewController">
+                    <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="3w3-Xn-b0R">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>

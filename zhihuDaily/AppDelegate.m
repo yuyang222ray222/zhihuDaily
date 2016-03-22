@@ -50,18 +50,9 @@ AppDelegate ()
     }
     completion:^(BOOL finished) {
       [snapShot removeFromSuperview];
-      [self.window makeKeyAndVisible];
     }];
 }
 
-- (void)applicationWillTerminate:(UIApplication*)application
-{
-  [[CacheUtil cache] saveData];
-}
-- (void)applicationWillResignActive:(UIApplication*)application
-{
-  [[CacheUtil cache] saveData];
-}
 - (void)cacheStartImage
 {
   NSString* imageApiUrl =
@@ -72,8 +63,6 @@ AppDelegate ()
           StartImage* model =
             [StartImage startImageWithDic:[APIRequest objToDic:data]];
           CacheUtil* cache = [CacheUtil cache];
-
-          //已经缓存过的图片不缓存
           CachedImages* cachedImage =
             [cache cachedImageWithKey:DATAKEY_STARTIMAGE];
           if ([model.img isEqualToString:cachedImage.url])
@@ -84,5 +73,14 @@ AppDelegate ()
                         completion:nil];
           [cache.dataDic setValue:model.text forKey:DATAKEY_STARTIMAGE_AUTHOR];
         }];
+}
+
+- (void)applicationWillTerminate:(UIApplication*)application
+{
+  [[CacheUtil cache] saveData];
+}
+- (void)applicationWillResignActive:(UIApplication*)application
+{
+  [[CacheUtil cache] saveData];
 }
 @end

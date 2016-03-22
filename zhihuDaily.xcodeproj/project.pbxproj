@@ -15,6 +15,7 @@
 		F99C9FA21C9AE1CA003A0E91 /* CachedImages.m in Sources */ = {isa = PBXBuildFile; fileRef = F99C9FA11C9AE1CA003A0E91 /* CachedImages.m */; };
 		F99C9FA51C9B017D003A0E91 /* MD5Util.m in Sources */ = {isa = PBXBuildFile; fileRef = F99C9FA41C9B017D003A0E91 /* MD5Util.m */; };
 		F99FFA041C9A8BBA0025C736 /* GradientView.m in Sources */ = {isa = PBXBuildFile; fileRef = F99FFA031C9A8BBA0025C736 /* GradientView.m */; };
+		F9B5F15E1CA180D00049FE9E /* UINavigationBar+BackgroundColor.m in Sources */ = {isa = PBXBuildFile; fileRef = F9B5F15D1CA180D00049FE9E /* UINavigationBar+BackgroundColor.m */; };
 		F9EB59A01C9DA86D00E54379 /* SliderView.m in Sources */ = {isa = PBXBuildFile; fileRef = F9EB599F1C9DA86D00E54379 /* SliderView.m */; };
 		F9FE527B1C9844CC00C598A1 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = F9FE527A1C9844CC00C598A1 /* main.m */; };
 		F9FE527E1C9844CC00C598A1 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F9FE527D1C9844CC00C598A1 /* AppDelegate.m */; };
@@ -68,6 +69,8 @@
 		F99C9FA41C9B017D003A0E91 /* MD5Util.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MD5Util.m; sourceTree = "<group>"; };
 		F99FFA021C9A8BBA0025C736 /* GradientView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GradientView.h; sourceTree = "<group>"; };
 		F99FFA031C9A8BBA0025C736 /* GradientView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GradientView.m; sourceTree = "<group>"; };
+		F9B5F15C1CA180D00049FE9E /* UINavigationBar+BackgroundColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UINavigationBar+BackgroundColor.h"; sourceTree = "<group>"; };
+		F9B5F15D1CA180D00049FE9E /* UINavigationBar+BackgroundColor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UINavigationBar+BackgroundColor.m"; sourceTree = "<group>"; };
 		F9E2CB791C9AAC0B00F02856 /* DataKeys.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataKeys.m; sourceTree = "<group>"; };
 		F9EB599E1C9DA86D00E54379 /* SliderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SliderView.h; sourceTree = "<group>"; };
 		F9EB599F1C9DA86D00E54379 /* SliderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SliderView.m; sourceTree = "<group>"; };
@@ -135,6 +138,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		F9B5F15B1CA17FD90049FE9E /* Category */ = {
+			isa = PBXGroup;
+			children = (
+				F9B5F15C1CA180D00049FE9E /* UINavigationBar+BackgroundColor.h */,
+				F9B5F15D1CA180D00049FE9E /* UINavigationBar+BackgroundColor.m */,
+			);
+			name = Category;
+			sourceTree = "<group>";
+		};
 		F9FE526D1C9844CC00C598A1 = {
 			isa = PBXGroup;
 			children = (
@@ -161,6 +173,7 @@
 				F9FE52C51C99365000C598A1 /* Util */,
 				F9FE52BE1C99315B00C598A1 /* WebAPI */,
 				F9FE52B21C98463400C598A1 /* Others */,
+				F9B5F15B1CA17FD90049FE9E /* Category */,
 				F9FE52B11C98455F00C598A1 /* View */,
 				F9FE52B01C98455800C598A1 /* Controller */,
 				F9FE52AF1C9844E700C598A1 /* Model */,
@@ -427,6 +440,7 @@
 				F9FE527E1C9844CC00C598A1 /* AppDelegate.m in Sources */,
 				F9FE52D11C995FAA00C598A1 /* LoadingViewController.m in Sources */,
 				F99C9FA51C9B017D003A0E91 /* MD5Util.m in Sources */,
+				F9B5F15E1CA180D00049FE9E /* UINavigationBar+BackgroundColor.m in Sources */,
 				F9FE527B1C9844CC00C598A1 /* main.m in Sources */,
 				F9FE52D61C996B8E00C598A1 /* TestViewController.m in Sources */,
 				F9FE52B51C984DB800C598A1 /* SliderViewController.m in Sources */,

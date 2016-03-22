@@ -42,6 +42,7 @@ LoadingViewController ()
                    completion:nil];
 
   //跳转
+  //不管通过什么方式跳转，在有sb的情况下一定要让该viewcontroller加载sb之后再跳转，否则初始化会出问题
   UIStoryboard* storyboard =
     [UIStoryboard storyboardWithName:@"Main" bundle:nil];
   UINavigationController* viewController = [storyboard
@@ -52,13 +53,6 @@ LoadingViewController ()
                    [delegate changeRootViewController:viewController
                                               animate:true];
                  });
-  //下面这段是通过present出来的控制器，会有tableview设置style无效的bug
-  //    dispatch_after(
-  //      dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)),
-  //      dispatch_get_main_queue(), ^{
-  //        mainVC.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
-  //        [self presentViewController:mainVC animated:true completion:nil];
-  //      });
 }
 - (void)viewWillAppear:(BOOL)animated
 {

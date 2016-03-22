@@ -18,33 +18,41 @@
 #import "Stories.h"
 #import "StoriesHeaderCell.h"
 #import "StoriesTableViewCell.h"
+#import "UINavigationBar+BackgroundColor.h"
 #import "zhihuDailyAPI.h"
 
 static NSString* const kStoriesIdentifier = @"stories";
 static NSString* const kStoriesHeaderIdentifier = @"storiesHeader";
+static NSUInteger const kHeaderViewHeight = 44;
 
 @interface
 MainViewController ()
+
 @property (copy, nonatomic) NSArray<Stories*>* topStories;
 @property (strong, nonatomic) NSMutableDictionary* stories;
 @property (strong, nonatomic) NSMutableArray* dates;
+@property (assign, nonatomic) BOOL isLoaded;
 
 @property (strong, nonatomic) SliderViewController* sliderViewController;
 
-@property (assign, nonatomic) BOOL isLoaded;
-
+@property (assign, nonatomic) CGSize viewSize;
 @property (assign, nonatomic) NSUInteger sliderDisplayHeight;
-@property (assign, nonatomic) NSInteger sliderOffsetY;
+@property (assign, nonatomic) NSInteger sliderInsetY;
+
+@property (nonatomic, readonly) UIColor* themeColorWithAdjustmentAlpha;
 @end
 
 @implementation MainViewController
 #pragma mark - getters
+- (CGSize)viewSize
+{
+  return self.view.bounds.size;
+}
 + (UIColor*)themeColor
 {
   static UIColor* color = nil;
   static dispatch_once_t onceToken;
   dispatch_once(&onceToken, ^{
-    //这里填写的0.0~1.1的值，不是0~255，而且必须是float
     color = [UIColor colorWithRed:51.0 / 255
                             green:153.0 / 255
                              blue:230.0 / 255
@@ -66,9 +74,9 @@ MainViewController ()
   }
   return _dates;
 }
-- (NSInteger)sliderOffsetY
+- (NSInteger)sliderInsetY
 {
-  return -120;
+  return -100;
 }
 - (NSUInteger)sliderDisplayHeight
 {
@@ -78,20 +86,28 @@ MainViewController ()
 {
   if (_sliderViewController == nil) {
     _sliderViewController = [[SliderViewController alloc]
-      initWithFrame:CGRectMake(
-                      0, self.sliderOffsetY, self.view.bounds.size.width,
-                      self.sliderDisplayHeight + labs(self.sliderOffsetY))
+      initWithFrame:CGRectMake(0, self.sliderInsetY, self.viewSize.width,
+                               self.sliderDisplayHeight +
+                                 labs(self.sliderInsetY))
          andStories:self.topStories];
   }
   return _sliderViewController;
 }
-
+- (UIColor*)themeColorWithAdjustmentAlpha
+{
+  CGFloat contentOffsetY = self.tableView.contentOffset.y;
+  contentOffsetY = MAX(contentOffsetY, 0);
+  CGFloat alpha =
+    (contentOffsetY + self.sliderInsetY) / (self.sliderDisplayHeight - 64);
+  UIColor* color =
+    [[MainViewController themeColor] colorWithAlphaComponent:alpha];
+  return color;
+}
 #pragma mark - init
 
 - (void)viewDidLoad
 {
   [super viewDidLoad];
-  NSLog(@"%ld", (long)self.tableView.style);
   [self buildMainPage];
 }
 
@@ -99,23 +115,29 @@ MainViewController ()
 - (void)buildMainPage
 {
   [self loadData];
+  [self buildNavigation];
   [self buildTableView];
 }
 - (void)buildSliderView
 {
   [self addChildViewController:self.sliderViewController];
   self.tableView.tableHeaderView = self.sliderViewController.view;
-  self.tableView.contentInset = UIEdgeInsetsMake(self.sliderOffsetY, 0, 0, 0);
+}
+- (void)buildNavigation
+{
+  [self setNavigationBarTransparent];
+  [self.navigationController.navigationBar setTitleTextAttributes:@{
+    NSForegroundColorAttributeName : [UIColor whiteColor]
+  }];
 }
 - (void)buildTableView
 {
   [self.tableView registerNib:[UINib nibWithNibName:@"StoriesTableViewCell"
                                              bundle:nil]
        forCellReuseIdentifier:kStoriesIdentifier];
-  self.navigationController.navigationBar.translucent = true;
-  self.navigationController.navigationBar.alpha = 0;
+  self.tableView.showsVerticalScrollIndicator = false;
+  self.tableView.showsHorizontalScrollIndicator = false;
   self.tableView.rowHeight = 90;
-  self.tableView.sectionHeaderHeight = 40;
 }
 #pragma mark - tableview datasource
 - (NSInteger)numberOfSectionsInTableView:(UITableView*)tableView
@@ -127,11 +149,16 @@ MainViewController ()
 {
   return [self.stories[self.dates[section]] count];
 }
+- (CGFloat)tableView:(UITableView*)tableView
+  heightForHeaderInSection:(NSInteger)section
+{
+  return kHeaderViewHeight;
+}
 - (UIView*)tableView:(UITableView*)tableView
   viewForHeaderInSection:(NSInteger)section
 {
   StoriesHeaderCell* header = [[StoriesHeaderCell alloc]
-    initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 40)];
+    initWithFrame:CGRectMake(0, 0, self.viewSize.width, kHeaderViewHeight)];
   header.text = [DateUtil dateString:self.dates[section]
                           fromFormat:@"yyyyMMdd"
                             toFormat:@"MM月dd日 EEEE"];
@@ -215,10 +242,46 @@ MainViewController ()
     offset.y = 0;
     scrollView.contentOffset = offset;
   }
+  [self adjustNavigationAlpha];
 }
-#pragma mark statusbar style
-- (UIStatusBarStyle)preferredStatusBarStyle
+#pragma mark navigationbar styles
+- (void)setNavigationBarTransparent
 {
-  return UIStatusBarStyleLightContent;
+  self.navigationController.navigationBar.translucent = true;
+  //  self.navigationController.navigationBar.clipsToBounds = true;
+
+  UIColor* color = [UIColor clearColor];
+  CGRect rect = CGRectMake(0, 0, self.viewSize.width, 64);
+
+  UIGraphicsBeginImageContext(rect.size);
+  CGContextRef ref = UIGraphicsGetCurrentContext();
+  CGContextSetFillColorWithColor(ref, color.CGColor);
+  CGContextFillRect(ref, rect);
+  UIImage* image = UIGraphicsGetImageFromCurrentImageContext();
+  UIGraphicsEndImageContext();
+
+  [self.navigationController.navigationBar
+    setBackgroundImage:image
+         forBarMetrics:UIBarMetricsDefault];
+}
+
+- (void)adjustNavigationAlpha
+{
+  if (self.tableView.contentOffset.y >
+      self.sliderDisplayHeight + labs(self.sliderInsetY + 20)) {
+    self.tableView.contentInset = UIEdgeInsetsMake(20, 0, 0, 0);
+    self.navigationItem.title = nil;
+    //避免隐藏navigationbar之后被背景layer挡住section header
+    [self.navigationController.navigationBar setBackgroundLayerHeight:20];
+  } else {
+    self.tableView.contentInset = UIEdgeInsetsMake(self.sliderInsetY, 0, 0, 0);
+    self.navigationItem.title = @"今日热闻";
+    [self.navigationController.navigationBar
+      setNavigationBackgroundColor:self.themeColorWithAdjustmentAlpha];
+
+    [self.navigationController.navigationBar setBackgroundLayerHeight:64];
+  }
+
+  NSLog(@"%f", self.tableView.contentInset.top);
 }
 @end
