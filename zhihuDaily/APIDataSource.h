@@ -15,6 +15,7 @@
 #import <UIKit/UIKit.h>
 
 @class Stories;
+@class Story;
 
 @interface APIDataSource : NSObject
 + (instancetype)dataSource;
@@ -32,4 +33,8 @@
 @property (strong, nonatomic) UIImage* startImage;
 @property (strong, nonatomic) NSString* startImageAuthor;
 - (void)startImage:(void (^)(void))completion;
+
+#pragma mark - News
+@property (strong, nonatomic) Story* story;
+- (void)news:(NSUInteger)identifier completion:(void (^)(void))completion;
 @end

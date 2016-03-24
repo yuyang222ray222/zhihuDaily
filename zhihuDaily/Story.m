@@ -9,5 +9,23 @@
 #import "Story.h"
 
 @implementation Story
+- (instancetype)initWithDic:(NSDictionary*)dic
+{
+  self = [super init];
+  if (self) {
+    self.css = [dic[@"css"] firstObject];
+    self.image = dic[@"image"];
+    self.imageSource = dic[@"imageSource"];
+    self.body = dic[@"body"];
+    self.type = [dic[@"type"] integerValue];
+    self.id = [dic[@"id"] integerValue];
+  }
+  return self;
+}
+
++ (instancetype)storyWithDic:(NSDictionary*)dic
+{
+  return [[self alloc] initWithDic:dic];
+}
 
 @end

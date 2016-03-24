@@ -10,4 +10,7 @@
 
 @interface MainViewController : UITableViewController
 + (UIColor*)themeColor;
+
++ (NSInteger)sliderInsetY;
++ (NSUInteger)sliderDisplayHeight;
 @end

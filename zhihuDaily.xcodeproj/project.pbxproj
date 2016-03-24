@@ -32,7 +32,7 @@
 		F9FE52CE1C99557100C598A1 /* StartImage.m in Sources */ = {isa = PBXBuildFile; fileRef = F9FE52CD1C99557100C598A1 /* StartImage.m */; };
 		F9FE52D11C995FAA00C598A1 /* LoadingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F9FE52D01C995FAA00C598A1 /* LoadingViewController.m */; };
 		F9FE52D31C99608A00C598A1 /* LoadingScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F9FE52D21C99608A00C598A1 /* LoadingScreen.storyboard */; };
-		F9FE52D61C996B8E00C598A1 /* TestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F9FE52D51C996B8E00C598A1 /* TestViewController.m */; };
+		F9FE52D61C996B8E00C598A1 /* StoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F9FE52D51C996B8E00C598A1 /* StoryViewController.m */; };
 		F9FE52D91C99773200C598A1 /* CacheUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = F9FE52D81C99773200C598A1 /* CacheUtil.m */; };
 		F9FE52DC1C998FFB00C598A1 /* DateUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = F9FE52DB1C998FFB00C598A1 /* DateUtil.m */; };
 /* End PBXBuildFile section */
@@ -73,7 +73,7 @@
 		F9E2CB791C9AAC0B00F02856 /* DataKeys.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataKeys.m; sourceTree = "<group>"; };
 		F9EB599E1C9DA86D00E54379 /* SliderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SliderView.h; sourceTree = "<group>"; };
 		F9EB599F1C9DA86D00E54379 /* SliderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SliderView.m; sourceTree = "<group>"; };
-		F9FE52761C9844CC00C598A1 /* zhihuDaily.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = zhihuDaily.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		F9FE52761C9844CC00C598A1 /* 纸糊日报.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "纸糊日报.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F9FE527A1C9844CC00C598A1 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		F9FE527C1C9844CC00C598A1 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		F9FE527D1C9844CC00C598A1 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -104,8 +104,8 @@
 		F9FE52CF1C995FAA00C598A1 /* LoadingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoadingViewController.h; sourceTree = "<group>"; };
 		F9FE52D01C995FAA00C598A1 /* LoadingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoadingViewController.m; sourceTree = "<group>"; };
 		F9FE52D21C99608A00C598A1 /* LoadingScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LoadingScreen.storyboard; sourceTree = "<group>"; };
-		F9FE52D41C996B8E00C598A1 /* TestViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestViewController.h; sourceTree = "<group>"; };
-		F9FE52D51C996B8E00C598A1 /* TestViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestViewController.m; sourceTree = "<group>"; };
+		F9FE52D41C996B8E00C598A1 /* StoryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StoryViewController.h; sourceTree = "<group>"; };
+		F9FE52D51C996B8E00C598A1 /* StoryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StoryViewController.m; sourceTree = "<group>"; };
 		F9FE52D71C99773200C598A1 /* CacheUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CacheUtil.h; sourceTree = "<group>"; };
 		F9FE52D81C99773200C598A1 /* CacheUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CacheUtil.m; sourceTree = "<group>"; };
 		F9FE52DA1C998FFB00C598A1 /* DateUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DateUtil.h; sourceTree = "<group>"; };
@@ -159,7 +159,7 @@
 		F9FE52771C9844CC00C598A1 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				F9FE52761C9844CC00C598A1 /* zhihuDaily.app */,
+				F9FE52761C9844CC00C598A1 /* 纸糊日报.app */,
 				F9FE52921C9844CC00C598A1 /* zhihuDailyTests.xctest */,
 				F9FE529D1C9844CC00C598A1 /* zhihuDailyUITests.xctest */,
 			);
@@ -235,8 +235,8 @@
 				F9FE52CF1C995FAA00C598A1 /* LoadingViewController.h */,
 				F9FE52D01C995FAA00C598A1 /* LoadingViewController.m */,
 				F9FE52D21C99608A00C598A1 /* LoadingScreen.storyboard */,
-				F9FE52D41C996B8E00C598A1 /* TestViewController.h */,
-				F9FE52D51C996B8E00C598A1 /* TestViewController.m */,
+				F9FE52D41C996B8E00C598A1 /* StoryViewController.h */,
+				F9FE52D51C996B8E00C598A1 /* StoryViewController.m */,
 				F91CD7B21C99A45E00CBDA28 /* LaunchScreen.storyboard */,
 			);
 			name = Controller;
@@ -297,9 +297,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		F9FE52751C9844CC00C598A1 /* zhihuDaily */ = {
+		F9FE52751C9844CC00C598A1 /* 纸糊日报 */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = F9FE52A61C9844CC00C598A1 /* Build configuration list for PBXNativeTarget "zhihuDaily" */;
+			buildConfigurationList = F9FE52A61C9844CC00C598A1 /* Build configuration list for PBXNativeTarget "纸糊日报" */;
 			buildPhases = (
 				F9FE52721C9844CC00C598A1 /* Sources */,
 				F9FE52731C9844CC00C598A1 /* Frameworks */,
@@ -309,9 +309,9 @@
 			);
 			dependencies = (
 			);
-			name = zhihuDaily;
+			name = "纸糊日报";
 			productName = zhihuDaily;
-			productReference = F9FE52761C9844CC00C598A1 /* zhihuDaily.app */;
+			productReference = F9FE52761C9844CC00C598A1 /* 纸糊日报.app */;
 			productType = "com.apple.product-type.application";
 		};
 		F9FE52911C9844CC00C598A1 /* zhihuDailyTests */ = {
@@ -388,7 +388,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				F9FE52751C9844CC00C598A1 /* zhihuDaily */,
+				F9FE52751C9844CC00C598A1 /* 纸糊日报 */,
 				F9FE52911C9844CC00C598A1 /* zhihuDailyTests */,
 				F9FE529C1C9844CC00C598A1 /* zhihuDailyUITests */,
 			);
@@ -441,7 +441,7 @@
 				F99C9FA51C9B017D003A0E91 /* MD5Util.m in Sources */,
 				F9B5F15E1CA180D00049FE9E /* UINavigationBar+BackgroundColor.m in Sources */,
 				F9FE527B1C9844CC00C598A1 /* main.m in Sources */,
-				F9FE52D61C996B8E00C598A1 /* TestViewController.m in Sources */,
+				F9FE52D61C996B8E00C598A1 /* StoryViewController.m in Sources */,
 				F9FE52B51C984DB800C598A1 /* SliderViewController.m in Sources */,
 				F9624F841C9EA85F00CEDC42 /* StoriesTableViewCell.m in Sources */,
 				F9FE52CB1C99380500C598A1 /* GCDUtil.m in Sources */,
@@ -474,12 +474,12 @@
 /* Begin PBXTargetDependency section */
 		F9FE52941C9844CC00C598A1 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = F9FE52751C9844CC00C598A1 /* zhihuDaily */;
+			target = F9FE52751C9844CC00C598A1 /* 纸糊日报 */;
 			targetProxy = F9FE52931C9844CC00C598A1 /* PBXContainerItemProxy */;
 		};
 		F9FE529F1C9844CC00C598A1 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = F9FE52751C9844CC00C598A1 /* zhihuDaily */;
+			target = F9FE52751C9844CC00C598A1 /* 纸糊日报 */;
 			targetProxy = F9FE529E1C9844CC00C598A1 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -664,7 +664,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		F9FE52A61C9844CC00C598A1 /* Build configuration list for PBXNativeTarget "zhihuDaily" */ = {
+		F9FE52A61C9844CC00C598A1 /* Build configuration list for PBXNativeTarget "纸糊日报" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				F9FE52A71C9844CC00C598A1 /* Debug */,

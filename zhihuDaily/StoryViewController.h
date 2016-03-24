@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface TestViewController : UIViewController
-
+@interface StoryViewController : UIViewController
+@property (assign, nonatomic) NSUInteger identifier;
 @end

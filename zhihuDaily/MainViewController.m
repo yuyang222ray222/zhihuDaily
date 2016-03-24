@@ -9,9 +9,7 @@
 #import "APIDataSource.h"
 #import "APIRequest.h"
 #import "CacheUtil.h"
-#import "DataKeys.m"
 #import "DateUtil.h"
-#import "GCDUtil.h"
 #import "MD5Util.h"
 #import "MainViewController.h"
 #import "SliderView.h"
@@ -19,6 +17,7 @@
 #import "Stories.h"
 #import "StoriesHeaderCell.h"
 #import "StoriesTableViewCell.h"
+#import "StoryViewController.h"
 #import "UINavigationBar+BackgroundColor.h"
 
 static NSString* const kStoriesIdentifier = @"stories";
@@ -37,8 +36,6 @@ MainViewController ()
 @property (strong, nonatomic) SliderViewController* sliderViewController;
 
 @property (assign, nonatomic) CGSize viewSize;
-@property (assign, nonatomic) NSUInteger sliderDisplayHeight;
-@property (assign, nonatomic) NSInteger sliderInsetY;
 
 @property (nonatomic, readonly) UIColor* themeColorWithAdjustmentAlpha;
 @end
@@ -83,11 +80,11 @@ MainViewController ()
   });
   return color;
 }
-- (NSInteger)sliderInsetY
++ (NSInteger)sliderInsetY
 {
   return -100;
 }
-- (NSUInteger)sliderDisplayHeight
++ (NSUInteger)sliderDisplayHeight
 {
   return 736 == [[UIScreen mainScreen] bounds].size.height ? 230 : 200;
 }
@@ -95,9 +92,10 @@ MainViewController ()
 {
   if (_sliderViewController == nil) {
     _sliderViewController = [[SliderViewController alloc]
-      initWithFrame:CGRectMake(0, self.sliderInsetY, self.viewSize.width,
-                               self.sliderDisplayHeight +
-                                 labs(self.sliderInsetY))
+      initWithFrame:CGRectMake(0, [self.class sliderInsetY],
+                               self.viewSize.width,
+                               [self.class sliderDisplayHeight] +
+                                 labs([self.class sliderInsetY]))
          andStories:self.topStories];
   }
   return _sliderViewController;
@@ -106,8 +104,8 @@ MainViewController ()
 {
   CGFloat contentOffsetY = self.tableView.contentOffset.y;
   contentOffsetY = MAX(contentOffsetY, 0);
-  CGFloat alpha =
-    (contentOffsetY + self.sliderInsetY) / (self.sliderDisplayHeight - 64);
+  CGFloat alpha = (contentOffsetY + [self.class sliderInsetY]) /
+                  ([self.class sliderDisplayHeight] - 64);
   UIColor* color =
     [[MainViewController themeColor] colorWithAlphaComponent:alpha];
   return color;
@@ -237,6 +235,16 @@ MainViewController ()
       self.isRequesting = false;
     }];
 }
+- (void)tableView:(UITableView*)tableView
+  didSelectRowAtIndexPath:(NSIndexPath*)indexPath
+{
+  StoryViewController* storyVC = [[StoryViewController alloc] init];
+  Stories* selectedStories =
+    self.stories[self.dates[indexPath.section]][indexPath.row];
+  storyVC.identifier = selectedStories.identidier;
+
+  [self.navigationController pushViewController:storyVC animated:YES];
+}
 #pragma mark - scrollview delegate
 - (void)scrollViewWillBeginDragging:(UIScrollView*)scrollView
 {
@@ -286,14 +294,15 @@ MainViewController ()
 - (void)adjustNavigationAlpha
 {
   if (self.tableView.contentOffset.y >
-      self.sliderDisplayHeight + labs(self.sliderInsetY + 20)) {
+      [self.class sliderDisplayHeight] + labs([self.class sliderInsetY] + 20)) {
     self.tableView.contentInset = UIEdgeInsetsMake(20, 0, 0, 0);
     //这里不能直接隐藏navigationbar，会导致tableview的insettop失控
     self.navigationItem.title = @"";
     //缩短背景视图避免其挡住section header
     [self.navigationController.navigationBar setBackgroundLayerHeight:20];
   } else {
-    self.tableView.contentInset = UIEdgeInsetsMake(self.sliderInsetY, 0, 0, 0);
+    self.tableView.contentInset =
+      UIEdgeInsetsMake([self.class sliderInsetY], 0, 0, 0);
     self.navigationItem.title = @"今日热闻";
     [self.navigationController.navigationBar
       setNavigationBackgroundColor:self.themeColorWithAdjustmentAlpha];

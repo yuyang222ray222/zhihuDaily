@@ -22,6 +22,7 @@ APIDataSource ()
 @property (strong, nonatomic) CacheUtil* cache;
 @end
 @implementation APIDataSource
+#pragma mark - init
 + (instancetype)dataSource
 {
   static APIDataSource* datasource = nil;
@@ -138,4 +139,15 @@ APIDataSource ()
                                           forKey:DATAKEY_STARTIMAGE_AUTHOR];
                   }];
 }
+#pragma mark - News
+- (void)news:(NSUInteger)identifier completion:(void (^)(void))completion
+{
+  NSString* url = [NSString stringWithFormat:@"%@%lu", API_Url, identifier];
+  [APIRequest requestWithUrl:url
+                  completion:^(id data, NSString* md5) {
+                    self.story =
+                      [Story storyWithDic:[APIRequest objToDic:data]];
+                  }];
+}
+
 @end
