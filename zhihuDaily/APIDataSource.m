@@ -11,6 +11,7 @@
 #import "CacheUtil.h"
 #import "CachedImage.h"
 #import "DataKeys.m"
+#import "DateUtil.h"
 #import "GCDUtil.h"
 #import "StartImage.h"
 #import "Stories.h"
@@ -37,7 +38,7 @@ APIDataSource ()
   }
   return _cache;
 }
-#pragma mark - NewsLatest
+#pragma mark - NewsLatest & NewsBefore
 - (void)newsLatest:(void (^)(BOOL needsToReload))completion
 {
   [APIRequest
@@ -45,35 +46,63 @@ APIDataSource ()
         completion:^(id data, NSString* md5) {
           BOOL needsToReload = false;
 
-          NSMutableDictionary* dic = [NSMutableDictionary
-            dictionaryWithDictionary:[APIRequest objToDic:data]];
-
-          NSString* date = dic[DATAKEY_STORIES_DATE];
-          if (self.cache.dataDic[date] == nil) {
-            [dic setValue:md5 forKey:DATAKEY_STORIES_SIGNATURE];
-            [self.cache.dataDic setObject:dic forKey:date];
-
-            needsToReload = true;
-          } else {
-            NSDictionary* cachedDic = self.cache.dataDic[date];
-            // compare signature
-            if (![cachedDic[DATAKEY_STORIES_SIGNATURE] isEqualToString:md5]) {
-              [dic setValue:md5 forKey:DATAKEY_STORIES_SIGNATURE];
-              [self.cache.dataDic setObject:dic forKey:date];
-
-              needsToReload = true;
-            }
-          }
+          NSDictionary* dic = [self loadStoriesData:data
+                                          signature:md5
+                                      needsToReload:&needsToReload];
 
           self.topStories = [Stories stories:dic[DATAKEY_STORIES_TOPSTORIES]];
           self.stories = [Stories stories:dic[DATAKEY_STORIES_STORIES]];
-          self.date = date;
+          self.date = dic[DATAKEY_STORIES_DATE];
 
           if (completion != nil)
             completion(needsToReload);
         }];
 }
+- (void)newsBefore:(NSString*)date completion:(void (^)(void))completion
+{
+  NSString* url = [NSString stringWithFormat:@"%@%@", API_Url_NewsBefore, date];
 
+  [APIRequest requestWithUrl:url
+                  completion:^(id data, NSString* md5) {
+                    BOOL needsToReload = false;
+                    NSDictionary* dic = [self loadStoriesData:data
+                                                    signature:md5
+                                                needsToReload:&needsToReload];
+                    self.stories =
+                      [Stories stories:dic[DATAKEY_STORIES_STORIES]];
+                    self.date = dic[DATAKEY_STORIES_DATE];
+
+                    if (completion != nil)
+                      completion();
+                  }];
+}
+- (NSDictionary*)loadStoriesData:(id)data
+                       signature:(NSString*)md5
+                   needsToReload:(BOOL*)needsToReload
+{
+  NSMutableDictionary* dic =
+    [NSMutableDictionary dictionaryWithDictionary:[APIRequest objToDic:data]];
+
+  NSString* date = dic[DATAKEY_STORIES_DATE];
+  if (self.cache.dataDic[date] == nil) {
+    [dic setValue:md5 forKey:DATAKEY_STORIES_SIGNATURE];
+    [self.cache.dataDic setObject:dic forKey:date];
+
+    *needsToReload = true;
+  } else {
+    NSDictionary* cachedDic = self.cache.dataDic[date];
+    // compare signature
+    if (![cachedDic[DATAKEY_STORIES_SIGNATURE] isEqualToString:md5]) {
+      [self.cache.dataDic removeObjectForKey:date];
+
+      [dic setValue:md5 forKey:DATAKEY_STORIES_SIGNATURE];
+      [self.cache.dataDic setObject:dic forKey:date];
+
+      *needsToReload = true;
+    }
+  }
+  return dic;
+}
 #pragma mark - StartImage
 - (UIImage*)startImage
 {

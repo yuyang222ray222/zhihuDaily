@@ -19,12 +19,14 @@
 @interface APIDataSource : NSObject
 + (instancetype)dataSource;
 
-#pragma mark - NewsLatest
+#pragma mark - NewsLatest & NewsBefore
 @property (strong, nonatomic) NSArray<Stories*>* topStories;
 @property (strong, nonatomic) NSString* date;
 @property (strong, nonatomic) NSArray* stories;
+@property (assign, nonatomic) BOOL isRequesting;
 
 - (void)newsLatest:(void (^)(BOOL needsToReload))completion;
+- (void)newsBefore:(NSString*)date completion:(void (^)(void))completion;
 
 #pragma mark - StartImage
 @property (strong, nonatomic) UIImage* startImage;

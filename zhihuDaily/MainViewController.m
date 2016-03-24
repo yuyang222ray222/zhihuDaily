@@ -32,6 +32,7 @@ MainViewController ()
 @property (copy, nonatomic) NSArray<Stories*>* topStories;
 @property (strong, nonatomic) NSMutableDictionary* stories;
 @property (strong, nonatomic) NSMutableArray* dates;
+@property (assign, nonatomic) __block BOOL isRequesting;
 
 @property (strong, nonatomic) SliderViewController* sliderViewController;
 
@@ -152,7 +153,8 @@ MainViewController ()
 - (NSInteger)tableView:(UITableView*)tableView
  numberOfRowsInSection:(NSInteger)section
 {
-  return [self.stories[self.dates[section]] count];
+  NSUInteger rowCountInSection = [self.stories[self.dates[section]] count];
+  return rowCountInSection;
 }
 - (CGFloat)tableView:(UITableView*)tableView
   heightForHeaderInSection:(NSInteger)section
@@ -185,6 +187,10 @@ MainViewController ()
 #pragma mark - api datasource
 - (void)loadLatestData
 {
+  if (self.isRequesting)
+    return;
+
+  self.isRequesting = true;
   [self.dataSource newsLatest:^(BOOL needsToReload) {
     if (!needsToReload && self.topStories.count != 0)
       return;
@@ -196,7 +202,40 @@ MainViewController ()
 
     [self buildSliderView];
     [self.tableView reloadData];
+
+    self.isRequesting = false;
   }];
+}
+- (void)loadBeforeData
+{
+  if (self.isRequesting || self.topStories.count == 0)
+    return;
+
+  NSDate* dayBefore =
+    [[DateUtil stringToDate:self.dates.lastObject format:@"yyyyMMdd"]
+      dateByAddingTimeInterval:-24 * 60 * 60];
+  if ([self.dates
+        containsObject:[DateUtil dateString:dayBefore withFormat:@"yyyyMMdd"]])
+    return;
+
+  self.isRequesting = true;
+  [self.dataSource
+    newsBefore:self.dates.lastObject
+    completion:^{
+      [self.stories setObject:self.dataSource.stories
+                       forKey:self.dataSource.date];
+      [self.dates addObject:self.dataSource.date];
+
+      [UIView setAnimationsEnabled:true];
+      [self.tableView beginUpdates];
+      [self.tableView
+          insertSections:[NSIndexSet indexSetWithIndex:self.stories.count - 1]
+        withRowAnimation:UITableViewRowAnimationNone];
+      [self.tableView endUpdates];
+      [UIView setAnimationsEnabled:false];
+
+      self.isRequesting = false;
+    }];
 }
 #pragma mark - scrollview delegate
 - (void)scrollViewWillBeginDragging:(UIScrollView*)scrollView
@@ -217,6 +256,11 @@ MainViewController ()
     offset.y = 0;
     scrollView.contentOffset = offset;
   }
+  if (scrollView.contentOffset.y >
+      scrollView.contentSize.height - self.view.bounds.size.height) {
+    [self loadBeforeData];
+  }
+
   [self adjustNavigationAlpha];
 }
 #pragma mark navigationbar styles
