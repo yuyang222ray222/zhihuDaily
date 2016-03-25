@@ -15,7 +15,7 @@
   if (self) {
     self.css = [dic[@"css"] firstObject];
     self.image = dic[@"image"];
-    self.imageSource = dic[@"imageSource"];
+    self.imageSource = dic[@"image_source"];
     self.body = dic[@"body"];
     self.title = dic[@"title"];
     self.type = [dic[@"type"] integerValue];

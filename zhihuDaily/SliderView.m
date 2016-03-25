@@ -105,6 +105,24 @@ SliderView ()<UIScrollViewDelegate>
 
     [gradientView addSubview:label];
     [self.scrollView addSubview:gradientView];
+
+    if (![self.dataSource
+          respondsToSelector:@selector(subTitleForSliderAtIndex:)])
+      continue;
+
+    NSString* sourceString = [self.dataSource subTitleForSliderAtIndex:i];
+    UILabel* imageSourceLabel = [[UILabel alloc]
+      initWithFrame:CGRectMake(label.frame.origin.x,
+                               gradientView.bounds.size.height - 20,
+                               gradientView.bounds.size.width - 20, 16)];
+    imageSourceLabel.textColor = [UIColor colorWithWhite:.8 alpha:1];
+    imageSourceLabel.font = [UIFont systemFontOfSize:10];
+    imageSourceLabel.shadowOffset = label.shadowOffset;
+    imageSourceLabel.shadowColor = [UIColor colorWithWhite:.3 alpha:1];
+    imageSourceLabel.text = sourceString;
+    imageSourceLabel.textAlignment = NSTextAlignmentRight;
+
+    [gradientView addSubview:imageSourceLabel];
   }
 }
 - (UIPageControl*)pageControl

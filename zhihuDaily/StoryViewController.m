@@ -86,6 +86,7 @@ StoryViewController ()<UIScrollViewDelegate>
 {
   self.webView = [[UIWebView alloc] initWithFrame:[UIScreen mainScreen].bounds];
   self.view = self.webView;
+  self.webView.backgroundColor = [UIColor whiteColor];
   self.webView.scrollView.delegate = self;
   self.webView.scrollView.contentInset =
     UIEdgeInsetsMake([MainViewController sliderInsetY], 0, 0, 0);
