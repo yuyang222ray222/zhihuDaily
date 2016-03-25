@@ -27,6 +27,8 @@ StoryViewController ()<UIScrollViewDelegate>
 @property (strong, nonatomic) SliderViewController* sliderViewController;
 
 @property (assign, nonatomic) CGSize viewSize;
+
+@property (assign, nonatomic) CGPoint gestureStartPoint;
 @end
 
 @implementation StoryViewController
@@ -90,6 +92,8 @@ StoryViewController ()<UIScrollViewDelegate>
   self.webView.scrollView.delegate = self;
   self.webView.scrollView.contentInset =
     UIEdgeInsetsMake([MainViewController sliderInsetY], 0, 0, 0);
+
+  [self addGestureRecognizer];
 }
 - (void)buildNavigation
 {
@@ -141,5 +145,31 @@ StoryViewController ()<UIScrollViewDelegate>
     offset.y = 0;
     scrollView.contentOffset = offset;
   }
+}
+#pragma mark - swipe back
+- (void)addGestureRecognizer
+{
+  UISwipeGestureRecognizer* horizontal = [[UISwipeGestureRecognizer alloc]
+    initWithTarget:self
+            action:@selector(reportHorizontalSwipe:)];
+  horizontal.direction = UISwipeGestureRecognizerDirectionLeft |
+                         UISwipeGestureRecognizerDirectionRight;
+  [self.view addGestureRecognizer:horizontal];
+}
+- (void)reportHorizontalSwipe:(UIGestureRecognizer*)recognizer
+{
+  [self backToMainViewController];
+}
+- (void)backToMainViewController
+{
+  [UIView animateWithDuration:0.3
+    animations:^{
+      self.view.frame =
+        CGRectMake(self.view.bounds.size.width, 0, self.view.bounds.size.width,
+                   self.view.bounds.size.height);
+    }
+    completion:^(BOOL finished) {
+      [self dismissViewControllerAnimated:false completion:nil];
+    }];
 }
 @end
