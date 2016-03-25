@@ -21,7 +21,7 @@ SliderView ()<UIScrollViewDelegate>
 @property (assign, nonatomic) NSUInteger imageCount;
 @property (strong, nonatomic) NSMutableArray<UIImageView*>* imageViews;
 
-@property (assign, nonatomic) NSInteger contentOffsetY;
+@property (assign, nonatomic) BOOL singleImageMode;
 @end
 
 @implementation SliderView
@@ -30,7 +30,6 @@ SliderView ()<UIScrollViewDelegate>
 {
   if (self = [super initWithFrame:frame]) {
     self.viewSize = frame.size;
-    self.contentOffsetY = frame.origin.y;
   }
   return self;
 }
@@ -39,8 +38,6 @@ SliderView ()<UIScrollViewDelegate>
   [self loadImages];
   [self loadContents];
   [self addSubview:self.scrollView];
-
-  //以下内容在imagecount大于1时才会初始化
   [self bringSubviewToFront:self.pageControl];
   [self startSliding];
 
@@ -77,25 +74,25 @@ SliderView ()<UIScrollViewDelegate>
 }
 - (void)loadContents
 {
-  if (![self.dataSource respondsToSelector:@selector(contentForSliderAtIndex:)])
+  if (![self.dataSource respondsToSelector:@selector(titleForSliderAtIndex:)])
     return;
 
   for (int i = 0; i < self.imageCount; i++) {
     //委托获取内容
-    NSString* content = [self.dataSource contentForSliderAtIndex:i];
+    NSString* content = [self.dataSource titleForSliderAtIndex:i];
     if (content == nil)
       continue;
 
     GradientView* gradientView = [[GradientView alloc]
       initWithFrame:CGRectMake(i * self.viewSize.width,
-                               labs(self.contentOffsetY), self.viewSize.width,
-                               self.viewSize.height + self.contentOffsetY)];
+                               labs(self.contentInsetY), self.viewSize.width,
+                               self.viewSize.height + self.contentInsetY)];
     gradientView.gradientLayer.colors = [NSArray
       arrayWithObjects:(id)[[UIColor clearColor] CGColor],
                        (id)[[UIColor colorWithWhite:0 alpha:0.7] CGColor], nil];
 
     UILabel* label = [[UILabel alloc]
-      initWithFrame:CGRectMake(10, gradientView.bounds.size.height - 80,
+      initWithFrame:CGRectMake(10, gradientView.bounds.size.height - 70,
                                self.viewSize.width - 20, 50)];
     label.textColor = [UIColor whiteColor];
     label.font = [UIFont systemFontOfSize:20 weight:0.3];
@@ -114,7 +111,7 @@ SliderView ()<UIScrollViewDelegate>
 {
   if (_pageControl == nil) {
     _pageControl = [[UIPageControl alloc] init];
-    if (self.imageCount <= 1)
+    if (self.singleImageMode)
       return _pageControl;
 
     _pageControl.numberOfPages = self.imageCount;
@@ -165,6 +162,10 @@ SliderView ()<UIScrollViewDelegate>
   return _scrollView;
 }
 #pragma mark - getters
+- (BOOL)singleImageMode
+{
+  return self.imageCount <= 1;
+}
 - (NSTimeInterval)interval
 {
   if (_interval == 0) {
@@ -213,7 +214,7 @@ SliderView ()<UIScrollViewDelegate>
 }
 - (void)startSliding
 {
-  if (self.imageCount <= 1)
+  if (self.singleImageMode)
     return;
 
   if (!self.timer.isValid)
@@ -235,7 +236,7 @@ SliderView ()<UIScrollViewDelegate>
 
 - (void)intervalTriggered
 {
-  int pageIndex = (self.pageControl.currentPage + 1) % self.imageCount;
+  int pageIndex = (int)((self.pageControl.currentPage + 1) % self.imageCount);
   self.pageControl.currentPage = pageIndex;
   [self pageChanged:self.pageControl];
 }

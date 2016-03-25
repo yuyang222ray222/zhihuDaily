@@ -13,6 +13,7 @@
 @property (assign, nonatomic) NSInteger type;
 @property (copy, nonatomic) NSString* css;
 @property (copy, nonatomic) NSString* body;
+@property (copy, nonatomic) NSString* title;
 @property (copy, nonatomic) NSString* image;
 @property (copy, nonatomic) NSString* imageSource;
 

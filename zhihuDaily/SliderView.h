@@ -27,13 +27,21 @@
  */
 - (UIImage*)imageForSliderAtIndex:(NSInteger)index;
 /**
- *  指定索引位置的内容
+ *  指定索引位置的标题
  *
  *  @param index <#index description#>
  *
  *  @return <#return value description#>
  */
-- (NSString*)contentForSliderAtIndex:(NSInteger)index;
+- (NSString*)titleForSliderAtIndex:(NSInteger)index;
+/**
+ *  指定索引位置的副标题
+ *
+ *  @param index <#index description#>
+ *
+ *  @return <#return value description#>
+ */
+- (NSString*)subTitleForSliderAtIndex:(NSInteger)index;
 /**
  *  指定索引位置的事件
  *
@@ -46,6 +54,7 @@
 @property (weak, nonatomic) id<SliderViewDataSource> dataSource;
 @property (assign, nonatomic) NSTimeInterval interval;
 
+@property (assign, nonatomic) NSInteger contentInsetY;
 /**
  *  构建SliderView
  */

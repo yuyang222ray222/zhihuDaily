@@ -147,6 +147,9 @@ APIDataSource ()
                   completion:^(id data, NSString* md5) {
                     self.story =
                       [Story storyWithDic:[APIRequest objToDic:data]];
+
+                    if (completion != nil)
+                      completion();
                   }];
 }
 

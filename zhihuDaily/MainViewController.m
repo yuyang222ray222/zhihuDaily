@@ -38,6 +38,8 @@ MainViewController ()
 @property (assign, nonatomic) CGSize viewSize;
 
 @property (nonatomic, readonly) UIColor* themeColorWithAdjustmentAlpha;
+
+@property (strong, nonatomic) StoryViewController* storyVC;
 @end
 
 @implementation MainViewController
@@ -182,6 +184,28 @@ MainViewController ()
 
   return cell;
 }
+#pragma mark - tableview delegate
+- (void)tableView:(UITableView*)tableView
+  didSelectRowAtIndexPath:(NSIndexPath*)indexPath
+{
+  self.storyVC = [[StoryViewController alloc] init];
+  Stories* selectedStories =
+    self.stories[self.dates[indexPath.section]][indexPath.row];
+  self.storyVC.identifier = selectedStories.identidier;
+
+  //从右向左的滑动动画
+  self.storyVC.view.frame =
+    CGRectMake(self.view.bounds.size.width, 0, self.view.bounds.size.width,
+               self.view.bounds.size.height);
+  [self.view.window insertSubview:self.storyVC.view aboveSubview:self.view];
+  [UIView animateWithDuration:0.3
+                   animations:^{
+                     self.storyVC.view.frame =
+                       CGRectMake(0, 0, self.view.bounds.size.width,
+                                  self.view.bounds.size.height);
+                   }
+                   completion:nil];
+}
 #pragma mark - api datasource
 - (void)loadLatestData
 {
@@ -235,16 +259,7 @@ MainViewController ()
       self.isRequesting = false;
     }];
 }
-- (void)tableView:(UITableView*)tableView
-  didSelectRowAtIndexPath:(NSIndexPath*)indexPath
-{
-  StoryViewController* storyVC = [[StoryViewController alloc] init];
-  Stories* selectedStories =
-    self.stories[self.dates[indexPath.section]][indexPath.row];
-  storyVC.identifier = selectedStories.identidier;
 
-  [self.navigationController pushViewController:storyVC animated:YES];
-}
 #pragma mark - scrollview delegate
 - (void)scrollViewWillBeginDragging:(UIScrollView*)scrollView
 {
@@ -304,10 +319,11 @@ MainViewController ()
     self.tableView.contentInset =
       UIEdgeInsetsMake([self.class sliderInsetY], 0, 0, 0);
     self.navigationItem.title = @"今日热闻";
-    [self.navigationController.navigationBar
-      setNavigationBackgroundColor:self.themeColorWithAdjustmentAlpha];
 
     [self.navigationController.navigationBar setBackgroundLayerHeight:64];
   }
+
+  [self.navigationController.navigationBar
+    setNavigationBackgroundColor:self.themeColorWithAdjustmentAlpha];
 }
 @end

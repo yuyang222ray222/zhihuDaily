@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @class Stories;
+@class Story;
 @class SliderView;
 
 @interface SliderViewController : UIViewController
@@ -16,4 +17,5 @@
 
 - (instancetype)initWithFrame:(CGRect)frame
                    andStories:(NSArray<Stories*>*)stories;
+- (instancetype)initWithFrame:(CGRect)frame andStory:(Story*)story;
 @end
