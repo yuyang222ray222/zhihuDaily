@@ -29,10 +29,19 @@ StoryViewController ()<UIScrollViewDelegate>
 @property (assign, nonatomic) CGSize viewSize;
 
 @property (assign, nonatomic) CGPoint gestureStartPoint;
+
+@property (weak, nonatomic) SliderView* sliderview;
 @end
 
 @implementation StoryViewController
 #pragma mark - accessors
+- (SliderView*)sliderview
+{
+  if (_sliderview == nil) {
+    _sliderview = self.sliderViewController.sliderView;
+  }
+  return _sliderview;
+}
 - (APIDataSource*)dataSource
 {
   if (_dataSource == nil) {
@@ -102,7 +111,7 @@ StoryViewController ()<UIScrollViewDelegate>
 - (void)loadSliderView
 {
   [self addChildViewController:self.sliderViewController];
-  [self.webView.scrollView addSubview:self.sliderViewController.view];
+  [self.webView.scrollView addSubview:self.sliderview];
 }
 - (void)loadWebView
 {
@@ -168,8 +177,17 @@ StoryViewController ()<UIScrollViewDelegate>
         CGRectMake(self.view.bounds.size.width, 0, self.view.bounds.size.width,
                    self.view.bounds.size.height);
     }
-    completion:^(BOOL finished) {
-      [self dismissViewControllerAnimated:false completion:nil];
+    completion:^(bool finished) {
+      [self releaseSliderView];
     }];
+}
+- (void)releaseSliderView
+{
+  [self.sliderViewController.sliderView removeFromSuperview];
+  self.sliderViewController.sliderView = nil;
+}
+- (void)dealloc
+{
+  NSLog(@"释放了");
 }
 @end

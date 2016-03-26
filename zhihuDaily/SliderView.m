@@ -25,6 +25,16 @@ SliderView ()<UIScrollViewDelegate>
 @end
 
 @implementation SliderView
+#pragma mark - release
+- (void)dealloc
+{
+  //  for (__strong UIImageView* imageView in self.imageViews) {
+  //    [imageView removeFromSuperview];
+  //    imageView = nil;
+  //  }
+  //  self.imageViews = nil;
+  NSLog(@"图片已释放。。雾");
+}
 #pragma mark - Initialization
 - (instancetype)initWithFrame:(CGRect)frame
 {

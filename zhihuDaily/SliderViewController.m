@@ -87,4 +87,9 @@ SliderViewController ()<SliderViewDataSource>
 {
   return self.story.imageSource;
 }
+#pragma mark release
+- (void)dealloc
+{
+  NSLog(@"图片轮播控制器已释放");
+}
 @end

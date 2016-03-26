@@ -31,7 +31,8 @@ MainViewController ()
 @property (copy, nonatomic) NSArray<Stories*>* topStories;
 @property (strong, nonatomic) NSMutableDictionary* stories;
 @property (strong, nonatomic) NSMutableArray* dates;
-@property (assign, nonatomic) __block BOOL isRequesting;
+@property (assign, nonatomic) BOOL isRequesting;
+@property (assign, nonatomic) BOOL isAnimating;
 
 @property (strong, nonatomic) SliderViewController* sliderViewController;
 
@@ -40,10 +41,19 @@ MainViewController ()
 @property (nonatomic, readonly) UIColor* themeColorWithAdjustmentAlpha;
 
 @property (strong, nonatomic) StoryViewController* storyVC;
+
+@property (weak, nonatomic) SliderView* sliderView;
 @end
 
 @implementation MainViewController
 #pragma mark - getters
+- (SliderView*)sliderView
+{
+  if (_sliderView == nil) {
+    _sliderView = self.sliderViewController.sliderView;
+  }
+  return _sliderView;
+}
 - (APIDataSource*)dataSource
 {
   if (_dataSource == nil) {
@@ -188,6 +198,20 @@ MainViewController ()
 - (void)tableView:(UITableView*)tableView
   didSelectRowAtIndexPath:(NSIndexPath*)indexPath
 {
+  if (self.isAnimating)
+    return;
+  /*
+   一般来说，这里推出新控制器的做法是在控制器中用委托和该控制器建立一个强引用
+   我懒得写委托，用全局变量得了。。
+
+         用局部变量的话这个方法执行完那个控制器就没了...
+   */
+  self.isAnimating = true;
+  if (self.storyVC != nil) {
+    [self.storyVC removeFromParentViewController];
+    self.storyVC = nil;
+  }
+
   self.storyVC = [[StoryViewController alloc] init];
   Stories* selectedStories =
     self.stories[self.dates[indexPath.section]][indexPath.row];
@@ -199,12 +223,13 @@ MainViewController ()
                self.view.bounds.size.height);
   [self.view.window insertSubview:self.storyVC.view aboveSubview:self.view];
   [UIView animateWithDuration:0.3
-                   animations:^{
-                     self.storyVC.view.frame =
-                       CGRectMake(0, 0, self.view.bounds.size.width,
-                                  self.view.bounds.size.height);
-                   }
-                   completion:nil];
+    animations:^{
+      self.storyVC.view.frame = CGRectMake(0, 0, self.view.bounds.size.width,
+                                           self.view.bounds.size.height);
+    }
+    completion:^(BOOL finished) {
+      self.isAnimating = false;
+    }];
 }
 #pragma mark - api datasource
 - (void)loadLatestData
@@ -248,13 +273,11 @@ MainViewController ()
                        forKey:self.dataSource.date];
       [self.dates addObject:self.dataSource.date];
 
-      [UIView setAnimationsEnabled:true];
       [self.tableView beginUpdates];
       [self.tableView
           insertSections:[NSIndexSet indexSetWithIndex:self.stories.count - 1]
         withRowAnimation:UITableViewRowAnimationNone];
       [self.tableView endUpdates];
-      [UIView setAnimationsEnabled:false];
 
       self.isRequesting = false;
     }];
@@ -263,13 +286,13 @@ MainViewController ()
 #pragma mark - scrollview delegate
 - (void)scrollViewWillBeginDragging:(UIScrollView*)scrollView
 {
-  [self.sliderViewController.sliderView stopSliding];
+  [self.sliderView stopSliding];
 }
 
 - (void)scrollViewDidEndDragging:(UIScrollView*)scrollView
                   willDecelerate:(BOOL)decelerate
 {
-  [self.sliderViewController.sliderView startSliding];
+  [self.sliderView startSliding];
 }
 - (void)scrollViewDidScroll:(UIScrollView*)scrollView
 {
