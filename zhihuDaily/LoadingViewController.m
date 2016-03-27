@@ -43,6 +43,11 @@ LoadingViewController ()
   [self loadAnimations];
   [self loadGradientView];
 }
+- (void)viewWillDisappear:(BOOL)animated
+{
+  [super viewWillDisappear:animated];
+  self.startImage = nil;
+}
 #pragma mark -
 - (void)loadStartImage
 {

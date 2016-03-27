@@ -17,15 +17,16 @@
 #import "Stories.h"
 #import "StoriesHeaderCell.h"
 #import "StoriesTableViewCell.h"
-#import "StoryViewController.h"
+#import "StoryView.h"
 #import "UINavigationBar+BackgroundColor.h"
 
 static NSString* const kStoriesIdentifier = @"stories";
 static NSString* const kStoriesHeaderIdentifier = @"storiesHeader";
 static NSUInteger const kHeaderViewHeight = 44;
+static NSUInteger const kRowHeight = 90;
 
 @interface
-MainViewController ()
+MainViewController ()<StoryViewDelegate>
 @property (strong, nonatomic) APIDataSource* dataSource;
 
 @property (copy, nonatomic) NSArray<Stories*>* topStories;
@@ -39,10 +40,11 @@ MainViewController ()
 @property (assign, nonatomic) CGSize viewSize;
 
 @property (nonatomic, readonly) UIColor* themeColorWithAdjustmentAlpha;
-
-@property (strong, nonatomic) StoryViewController* storyVC;
+@property (assign, nonatomic) NSInteger secondSectionOffsetY;
 
 @property (weak, nonatomic) SliderView* sliderView;
+
+@property (strong, nonatomic) StoryView* storyVC;
 @end
 
 @implementation MainViewController
@@ -122,6 +124,18 @@ MainViewController ()
     [[MainViewController themeColor] colorWithAlphaComponent:alpha];
   return color;
 }
+- (NSInteger)secondSectionOffsetY
+{
+  NSInteger firstOffsetY =
+    [self.class sliderDisplayHeight] + labs([self.class sliderInsetY]) + 20;
+
+  //这里应该减44的，我也不知道为啥变成了40才能对齐...
+  _secondSectionOffsetY =
+    firstOffsetY +
+    [self tableView:self.tableView numberOfRowsInSection:0] * kRowHeight - 40;
+
+  return _secondSectionOffsetY;
+}
 #pragma mark - initialization
 - (void)viewDidLoad
 {
@@ -153,7 +167,7 @@ MainViewController ()
        forCellReuseIdentifier:kStoriesIdentifier];
   self.tableView.showsVerticalScrollIndicator = false;
   self.tableView.showsHorizontalScrollIndicator = false;
-  self.tableView.rowHeight = 90;
+  self.tableView.rowHeight = kRowHeight;
 }
 #pragma mark - tableview datasource
 - (NSInteger)numberOfSectionsInTableView:(UITableView*)tableView
@@ -163,12 +177,18 @@ MainViewController ()
 - (NSInteger)tableView:(UITableView*)tableView
  numberOfRowsInSection:(NSInteger)section
 {
+  if (self.dates.count == 0)
+    return 0;
+
   NSUInteger rowCountInSection = [self.stories[self.dates[section]] count];
   return rowCountInSection;
 }
 - (CGFloat)tableView:(UITableView*)tableView
   heightForHeaderInSection:(NSInteger)section
 {
+  if (section == 0)
+    return 0;
+
   return kHeaderViewHeight;
 }
 - (UIView*)tableView:(UITableView*)tableView
@@ -207,12 +227,9 @@ MainViewController ()
          用局部变量的话这个方法执行完那个控制器就没了...
    */
   self.isAnimating = true;
-  if (self.storyVC != nil) {
-    [self.storyVC removeFromParentViewController];
-    self.storyVC = nil;
-  }
 
   self.storyVC = [[StoryViewController alloc] init];
+  self.storyVC.delegate = self;
   Stories* selectedStories =
     self.stories[self.dates[indexPath.section]][indexPath.row];
   self.storyVC.identifier = selectedStories.identidier;
@@ -230,6 +247,11 @@ MainViewController ()
     completion:^(BOOL finished) {
       self.isAnimating = false;
     }];
+}
+#pragma mark - storyViewController delegate
+- (void)releaseStoryViewController
+{
+  self.storyVC = nil;
 }
 #pragma mark - api datasource
 - (void)loadLatestData
@@ -331,8 +353,7 @@ MainViewController ()
 
 - (void)adjustNavigationAlpha
 {
-  if (self.tableView.contentOffset.y >
-      [self.class sliderDisplayHeight] + labs([self.class sliderInsetY] + 20)) {
+  if (self.tableView.contentOffset.y > self.secondSectionOffsetY) {
     self.tableView.contentInset = UIEdgeInsetsMake(20, 0, 0, 0);
     //这里不能直接隐藏navigationbar，会导致tableview的insettop失控
     self.navigationItem.title = @"";

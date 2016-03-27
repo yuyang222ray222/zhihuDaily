@@ -32,7 +32,7 @@
 		F9FE52CE1C99557100C598A1 /* StartImage.m in Sources */ = {isa = PBXBuildFile; fileRef = F9FE52CD1C99557100C598A1 /* StartImage.m */; };
 		F9FE52D11C995FAA00C598A1 /* LoadingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F9FE52D01C995FAA00C598A1 /* LoadingViewController.m */; };
 		F9FE52D31C99608A00C598A1 /* LoadingScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F9FE52D21C99608A00C598A1 /* LoadingScreen.storyboard */; };
-		F9FE52D61C996B8E00C598A1 /* StoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F9FE52D51C996B8E00C598A1 /* StoryViewController.m */; };
+		F9FE52D61C996B8E00C598A1 /* StoryView.m in Sources */ = {isa = PBXBuildFile; fileRef = F9FE52D51C996B8E00C598A1 /* StoryView.m */; };
 		F9FE52D91C99773200C598A1 /* CacheUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = F9FE52D81C99773200C598A1 /* CacheUtil.m */; };
 		F9FE52DC1C998FFB00C598A1 /* DateUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = F9FE52DB1C998FFB00C598A1 /* DateUtil.m */; };
 /* End PBXBuildFile section */
@@ -104,8 +104,8 @@
 		F9FE52CF1C995FAA00C598A1 /* LoadingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoadingViewController.h; sourceTree = "<group>"; };
 		F9FE52D01C995FAA00C598A1 /* LoadingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoadingViewController.m; sourceTree = "<group>"; };
 		F9FE52D21C99608A00C598A1 /* LoadingScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LoadingScreen.storyboard; sourceTree = "<group>"; };
-		F9FE52D41C996B8E00C598A1 /* StoryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StoryViewController.h; sourceTree = "<group>"; };
-		F9FE52D51C996B8E00C598A1 /* StoryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StoryViewController.m; sourceTree = "<group>"; };
+		F9FE52D41C996B8E00C598A1 /* StoryView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StoryView.h; sourceTree = "<group>"; };
+		F9FE52D51C996B8E00C598A1 /* StoryView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StoryView.m; sourceTree = "<group>"; };
 		F9FE52D71C99773200C598A1 /* CacheUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CacheUtil.h; sourceTree = "<group>"; };
 		F9FE52D81C99773200C598A1 /* CacheUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CacheUtil.m; sourceTree = "<group>"; };
 		F9FE52DA1C998FFB00C598A1 /* DateUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DateUtil.h; sourceTree = "<group>"; };
@@ -235,8 +235,8 @@
 				F9FE52CF1C995FAA00C598A1 /* LoadingViewController.h */,
 				F9FE52D01C995FAA00C598A1 /* LoadingViewController.m */,
 				F9FE52D21C99608A00C598A1 /* LoadingScreen.storyboard */,
-				F9FE52D41C996B8E00C598A1 /* StoryViewController.h */,
-				F9FE52D51C996B8E00C598A1 /* StoryViewController.m */,
+				F9FE52D41C996B8E00C598A1 /* StoryView.h */,
+				F9FE52D51C996B8E00C598A1 /* StoryView.m */,
 				F91CD7B21C99A45E00CBDA28 /* LaunchScreen.storyboard */,
 			);
 			name = Controller;
@@ -441,7 +441,7 @@
 				F99C9FA51C9B017D003A0E91 /* MD5Util.m in Sources */,
 				F9B5F15E1CA180D00049FE9E /* UINavigationBar+BackgroundColor.m in Sources */,
 				F9FE527B1C9844CC00C598A1 /* main.m in Sources */,
-				F9FE52D61C996B8E00C598A1 /* StoryViewController.m in Sources */,
+				F9FE52D61C996B8E00C598A1 /* StoryView.m in Sources */,
 				F9FE52B51C984DB800C598A1 /* SliderViewController.m in Sources */,
 				F9624F841C9EA85F00CEDC42 /* StoriesTableViewCell.m in Sources */,
 				F9FE52CB1C99380500C598A1 /* GCDUtil.m in Sources */,

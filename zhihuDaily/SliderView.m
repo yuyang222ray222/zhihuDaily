@@ -28,12 +28,9 @@ SliderView ()<UIScrollViewDelegate>
 #pragma mark - release
 - (void)dealloc
 {
-  //  for (__strong UIImageView* imageView in self.imageViews) {
-  //    [imageView removeFromSuperview];
-  //    imageView = nil;
-  //  }
-  //  self.imageViews = nil;
-  NSLog(@"图片已释放。。雾");
+  [self removeFromSuperview];
+  [[NSNotificationCenter defaultCenter] removeObserver:self];
+  NSLog(@"SliderView已释放");
 }
 #pragma mark - Initialization
 - (instancetype)initWithFrame:(CGRect)frame
@@ -51,15 +48,17 @@ SliderView ()<UIScrollViewDelegate>
   [self bringSubviewToFront:self.pageControl];
   [self startSliding];
 
-  NSNotificationCenter* nc = [NSNotificationCenter defaultCenter];
-  [nc addObserver:self
-         selector:@selector(stopSliding)
-             name:UIApplicationWillResignActiveNotification
-           object:nil];
-  [nc addObserver:self
-         selector:@selector(startSliding)
-             name:UIApplicationDidBecomeActiveNotification
-           object:nil];
+  if (self.singleImageMode) {
+    NSNotificationCenter* nc = [NSNotificationCenter defaultCenter];
+    [nc addObserver:self
+           selector:@selector(stopSliding)
+               name:UIApplicationWillResignActiveNotification
+             object:nil];
+    [nc addObserver:self
+           selector:@selector(startSliding)
+               name:UIApplicationDidBecomeActiveNotification
+             object:nil];
+  }
 }
 - (void)loadImages
 {
@@ -289,5 +288,4 @@ SliderView ()<UIScrollViewDelegate>
 {
   self.pageControl.currentPage = self.pageIndex;
 }
-
 @end

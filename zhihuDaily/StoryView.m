@@ -14,34 +14,21 @@
 #import "SliderViewController.h"
 #import "StartImage.h"
 #import "Story.h"
-#import "StoryViewController.h"
+#import "StoryView.h"
 #import "UINavigationBar+BackgroundColor.h"
 
 @interface
-StoryViewController ()<UIScrollViewDelegate>
-@property (strong, nonatomic) IBOutlet UIWebView* webView;
-
+StoryView ()<UIScrollViewDelegate>
 @property (strong, nonatomic) Story* story;
 @property (strong, nonatomic) APIDataSource* dataSource;
-
-@property (strong, nonatomic) SliderViewController* sliderViewController;
 
 @property (assign, nonatomic) CGSize viewSize;
 
 @property (assign, nonatomic) CGPoint gestureStartPoint;
-
-@property (weak, nonatomic) SliderView* sliderview;
 @end
 
-@implementation StoryViewController
+@implementation StoryView
 #pragma mark - accessors
-- (SliderView*)sliderview
-{
-  if (_sliderview == nil) {
-    _sliderview = self.sliderViewController.sliderView;
-  }
-  return _sliderview;
-}
 - (APIDataSource*)dataSource
 {
   if (_dataSource == nil) {
@@ -59,7 +46,7 @@ StoryViewController ()<UIScrollViewDelegate>
 }
 - (CGSize)viewSize
 {
-  return self.view.bounds.size;
+  return self.bounds.size;
 }
 - (SliderViewController*)sliderViewController
 {
@@ -73,10 +60,6 @@ StoryViewController ()<UIScrollViewDelegate>
   return _sliderViewController;
 }
 #pragma mark - init
-- (void)viewDidLoad
-{
-  [super viewDidLoad];
-}
 - (instancetype)init
 {
   if (self = [super init]) {
@@ -85,21 +68,12 @@ StoryViewController ()<UIScrollViewDelegate>
   }
   return self;
 }
-- (void)viewWillAppear:(BOOL)animated
-{
-  [super viewWillAppear:animated];
-
-  [self.navigationController.navigationBar setHidden:true];
-  [self.navigationController.navigationBar
-    setNavigationBackgroundColor:[UIColor clearColor]];
-}
 - (void)buildWebView
 {
-  self.webView = [[UIWebView alloc] initWithFrame:[UIScreen mainScreen].bounds];
-  self.view = self.webView;
-  self.webView.backgroundColor = [UIColor whiteColor];
-  self.webView.scrollView.delegate = self;
-  self.webView.scrollView.contentInset =
+  self.frame = [UIScreen mainScreen].bounds;
+  self.backgroundColor = [UIColor whiteColor];
+  self.scrollView.delegate = self;
+  self.scrollView.contentInset =
     UIEdgeInsetsMake([MainViewController sliderInsetY], 0, 0, 0);
 
   [self addGestureRecognizer];
@@ -110,8 +84,7 @@ StoryViewController ()<UIScrollViewDelegate>
 #pragma mark - data load
 - (void)loadSliderView
 {
-  [self addChildViewController:self.sliderViewController];
-  [self.webView.scrollView addSubview:self.sliderview];
+  [self.scrollView addSubview:self.sliderViewController.view];
 }
 - (void)loadWebView
 {
@@ -122,8 +95,8 @@ StoryViewController ()<UIScrollViewDelegate>
       [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
     NSInteger bodyPadding =
       736 == [[UIScreen mainScreen] bounds].size.height ? 130 : 100;
-    NSString* customCss =
-      [NSString stringWithFormat:@"body {padding-top:%ldpx;}", bodyPadding];
+    NSString* customCss = [NSString
+      stringWithFormat:@"body {padding-top:%ldpx;}", (long)bodyPadding];
     NSString* htmlFormatString = @"<html><head><style>%@</style><style "
                                  @"type='text/css'>%@</style></head><body>%@</"
                                  @"body></html>";
@@ -131,7 +104,7 @@ StoryViewController ()<UIScrollViewDelegate>
       [NSString stringWithFormat:htmlFormatString, cssContent, customCss,
                                  self.story.body];
     [[GCDUtil mainQueue] async:^{
-      [self.webView loadHTMLString:htmlString baseURL:nil];
+      [self loadHTMLString:htmlString baseURL:nil];
     }];
   }];
 }
@@ -141,8 +114,8 @@ StoryViewController ()<UIScrollViewDelegate>
              completion:^{
                self.story = self.dataSource.story;
 
-               [self loadSliderView];
-               [self loadWebView];
+               //[self loadSliderView];
+               //[self loadWebView];
              }];
 }
 #pragma mark - scrollview delegate
@@ -163,7 +136,7 @@ StoryViewController ()<UIScrollViewDelegate>
             action:@selector(reportHorizontalSwipe:)];
   horizontal.direction = UISwipeGestureRecognizerDirectionLeft |
                          UISwipeGestureRecognizerDirectionRight;
-  [self.view addGestureRecognizer:horizontal];
+  [self addGestureRecognizer:horizontal];
 }
 - (void)reportHorizontalSwipe:(UIGestureRecognizer*)recognizer
 {
@@ -173,21 +146,22 @@ StoryViewController ()<UIScrollViewDelegate>
 {
   [UIView animateWithDuration:0.3
     animations:^{
-      self.view.frame =
-        CGRectMake(self.view.bounds.size.width, 0, self.view.bounds.size.width,
-                   self.view.bounds.size.height);
+      self.frame = CGRectMake(self.bounds.size.width, 0, self.bounds.size.width,
+                              self.bounds.size.height);
     }
-    completion:^(bool finished) {
-      [self releaseSliderView];
+    completion:^(BOOL finished) {
+      if ([self.delegate respondsToSelector:@selector(releaseStoryView)])
+        [self.delegate releaseStoryView];
+      else
+        NSAssert(true,
+                 @"必"
+                 @"须实现releaseSliderView方法以释放相应对象");
     }];
-}
-- (void)releaseSliderView
-{
-  [self.sliderViewController.sliderView removeFromSuperview];
-  self.sliderViewController.sliderView = nil;
 }
 - (void)dealloc
 {
+  //在navigationController作为rootController的时候，好像不会调用子控制器的viewWillDisappear，只有在这里将其先行释放
+  [self.sliderViewController.sliderView removeFromSuperview];
   NSLog(@"释放了");
 }
 @end

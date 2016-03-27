@@ -90,6 +90,7 @@ SliderViewController ()<SliderViewDataSource>
 #pragma mark release
 - (void)dealloc
 {
-  NSLog(@"图片轮播控制器已释放");
+  [self removeFromParentViewController];
+  NSLog(@"SliderViewController已释放");
 }
 @end
