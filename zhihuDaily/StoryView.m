@@ -70,9 +70,7 @@ StoryView ()<UIScrollViewDelegate>
 }
 - (void)buildWebView
 {
-  self.frame = [UIScreen mainScreen].bounds;
   self.backgroundColor = [UIColor whiteColor];
-  self.scrollView.delegate = self;
   self.scrollView.contentInset =
     UIEdgeInsetsMake([MainViewController sliderInsetY], 0, 0, 0);
 
@@ -88,7 +86,7 @@ StoryView ()<UIScrollViewDelegate>
 }
 - (void)loadWebView
 {
-  [[GCDUtil globalQueueWithLevel:HIGH] async:^{
+  [[GCDUtil mainQueue] async:^{
     NSData* data =
       [NSData dataWithContentsOfURL:[NSURL URLWithString:self.story.css]];
     NSString* cssContent =
@@ -114,8 +112,8 @@ StoryView ()<UIScrollViewDelegate>
              completion:^{
                self.story = self.dataSource.story;
 
-               //[self loadSliderView];
-               //[self loadWebView];
+               [self loadSliderView];
+               [self loadWebView];
              }];
 }
 #pragma mark - scrollview delegate
@@ -134,8 +132,7 @@ StoryView ()<UIScrollViewDelegate>
   UISwipeGestureRecognizer* horizontal = [[UISwipeGestureRecognizer alloc]
     initWithTarget:self
             action:@selector(reportHorizontalSwipe:)];
-  horizontal.direction = UISwipeGestureRecognizerDirectionLeft |
-                         UISwipeGestureRecognizerDirectionRight;
+  horizontal.direction = UISwipeGestureRecognizerDirectionRight;
   [self addGestureRecognizer:horizontal];
 }
 - (void)reportHorizontalSwipe:(UIGestureRecognizer*)recognizer
@@ -150,12 +147,9 @@ StoryView ()<UIScrollViewDelegate>
                               self.bounds.size.height);
     }
     completion:^(BOOL finished) {
-      if ([self.delegate respondsToSelector:@selector(releaseStoryView)])
-        [self.delegate releaseStoryView];
-      else
-        NSAssert(true,
-                 @"必"
-                 @"须实现releaseSliderView方法以释放相应对象");
+      if ([self.storyViewDelegate
+            respondsToSelector:@selector(releaseStoryView)])
+        [self.storyViewDelegate releaseStoryView];
     }];
 }
 - (void)dealloc

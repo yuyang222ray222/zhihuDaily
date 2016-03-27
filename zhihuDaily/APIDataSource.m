@@ -142,7 +142,8 @@ APIDataSource ()
 #pragma mark - News
 - (void)news:(NSUInteger)identifier completion:(void (^)(void))completion
 {
-  NSString* url = [NSString stringWithFormat:@"%@%lu", API_Url, identifier];
+  NSString* url =
+    [NSString stringWithFormat:@"%@%lu", API_Url, (unsigned long)identifier];
   [APIRequest requestWithUrl:url
                   completion:^(id data, NSString* md5) {
                     self.story =

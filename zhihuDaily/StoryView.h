@@ -16,7 +16,7 @@
 @end
 
 @interface StoryView : UIWebView
-@property (weak, nonatomic) id<StoryViewDelegate> delegate;
+@property (weak, nonatomic) id<StoryViewDelegate> storyViewDelegate;
 @property (strong, nonatomic) SliderViewController* sliderViewController;
 
 @property (assign, nonatomic) NSUInteger identifier;

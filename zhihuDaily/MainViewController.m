@@ -129,7 +129,6 @@ MainViewController ()<StoryViewDelegate>
   NSInteger firstOffsetY =
     [self.class sliderDisplayHeight] + labs([self.class sliderInsetY]) + 20;
 
-  //这里应该减44的，我也不知道为啥变成了40才能对齐...
   _secondSectionOffsetY =
     firstOffsetY +
     [self tableView:self.tableView numberOfRowsInSection:0] * kRowHeight - 40;
@@ -220,37 +219,32 @@ MainViewController ()<StoryViewDelegate>
 {
   if (self.isAnimating)
     return;
-  /*
-   一般来说，这里推出新控制器的做法是在控制器中用委托和该控制器建立一个强引用
-   我懒得写委托，用全局变量得了。。
-
-         用局部变量的话这个方法执行完那个控制器就没了...
-   */
   self.isAnimating = true;
 
-  self.storyVC = [[StoryViewController alloc] init];
-  self.storyVC.delegate = self;
+  self.storyVC = [[StoryView alloc] init];
+  self.storyVC.storyViewDelegate = self;
   Stories* selectedStories =
     self.stories[self.dates[indexPath.section]][indexPath.row];
   self.storyVC.identifier = selectedStories.identidier;
 
   //从右向左的滑动动画
-  self.storyVC.view.frame =
+  self.storyVC.frame =
     CGRectMake(self.view.bounds.size.width, 0, self.view.bounds.size.width,
                self.view.bounds.size.height);
-  [self.view.window insertSubview:self.storyVC.view aboveSubview:self.view];
+  [self.view.window insertSubview:self.storyVC aboveSubview:self.view];
   [UIView animateWithDuration:0.3
     animations:^{
-      self.storyVC.view.frame = CGRectMake(0, 0, self.view.bounds.size.width,
-                                           self.view.bounds.size.height);
+      self.storyVC.frame = CGRectMake(0, 0, self.view.bounds.size.width,
+                                      self.view.bounds.size.height);
     }
     completion:^(BOOL finished) {
       self.isAnimating = false;
     }];
 }
 #pragma mark - storyViewController delegate
-- (void)releaseStoryViewController
+- (void)releaseStoryView
 {
+  [self.storyVC removeFromSuperview];
   self.storyVC = nil;
 }
 #pragma mark - api datasource

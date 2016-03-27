@@ -235,8 +235,6 @@
 				F9FE52CF1C995FAA00C598A1 /* LoadingViewController.h */,
 				F9FE52D01C995FAA00C598A1 /* LoadingViewController.m */,
 				F9FE52D21C99608A00C598A1 /* LoadingScreen.storyboard */,
-				F9FE52D41C996B8E00C598A1 /* StoryView.h */,
-				F9FE52D51C996B8E00C598A1 /* StoryView.m */,
 				F91CD7B21C99A45E00CBDA28 /* LaunchScreen.storyboard */,
 			);
 			name = Controller;
@@ -247,6 +245,8 @@
 			children = (
 				F99FFA021C9A8BBA0025C736 /* GradientView.h */,
 				F99FFA031C9A8BBA0025C736 /* GradientView.m */,
+				F9FE52D41C996B8E00C598A1 /* StoryView.h */,
+				F9FE52D51C996B8E00C598A1 /* StoryView.m */,
 				F9EB599E1C9DA86D00E54379 /* SliderView.h */,
 				F9EB599F1C9DA86D00E54379 /* SliderView.m */,
 				F9624F811C9EA85F00CEDC42 /* StoriesTableViewCell.h */,

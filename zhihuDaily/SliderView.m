@@ -13,6 +13,7 @@
 SliderView ()<UIScrollViewDelegate>
 @property (strong, nonatomic) UIScrollView* scrollView;
 @property (strong, nonatomic) UIPageControl* pageControl;
+@property (strong, nonatomic) UIButton* button;
 
 @property (assign, nonatomic) CGSize viewSize;
 @property (assign, nonatomic) NSUInteger pageIndex;
@@ -44,22 +45,22 @@ SliderView ()<UIScrollViewDelegate>
 {
   [self loadImages];
   [self loadContents];
+  [self loadButton];
   [self addSubview:self.scrollView];
   [self bringSubviewToFront:self.pageControl];
   [self startSliding];
 
-  if (self.singleImageMode) {
-    NSNotificationCenter* nc = [NSNotificationCenter defaultCenter];
-    [nc addObserver:self
-           selector:@selector(stopSliding)
-               name:UIApplicationWillResignActiveNotification
-             object:nil];
-    [nc addObserver:self
-           selector:@selector(startSliding)
-               name:UIApplicationDidBecomeActiveNotification
-             object:nil];
-  }
+  NSNotificationCenter* nc = [NSNotificationCenter defaultCenter];
+  [nc addObserver:self
+         selector:@selector(stopSliding)
+             name:UIApplicationWillResignActiveNotification
+           object:nil];
+  [nc addObserver:self
+         selector:@selector(startSliding)
+             name:UIApplicationDidBecomeActiveNotification
+           object:nil];
 }
+
 - (void)loadImages
 {
   for (int i = 0; i < self.imageCount; i++) {
@@ -134,6 +135,18 @@ SliderView ()<UIScrollViewDelegate>
     [gradientView addSubview:imageSourceLabel];
   }
 }
+- (void)loadButton
+{
+  self.button = [[UIButton alloc]
+    initWithFrame:CGRectMake(0, 0, _scrollView.contentSize.width,
+                             _scrollView.contentSize.height)];
+  self.button.titleLabel.text = @"";
+  [self.button addTarget:self
+                  action:@selector(sliderClicked)
+        forControlEvents:UIControlEventTouchUpInside];
+
+  [self.scrollView addSubview:self.button];
+}
 - (UIPageControl*)pageControl
 {
   if (_pageControl == nil) {
@@ -169,15 +182,6 @@ SliderView ()<UIScrollViewDelegate>
       setContentSize:CGSizeMake(self.viewSize.width * self.imageCount,
                                 self.viewSize.height)];
     [_scrollView setPagingEnabled:true];
-
-    UIButton* button = [[UIButton alloc]
-      initWithFrame:CGRectMake(0, 0, _scrollView.contentSize.width,
-                               _scrollView.contentSize.height)];
-    button.titleLabel.text = @"";
-    [button addTarget:self
-                action:@selector(sliderClicked)
-      forControlEvents:UIControlEventTouchUpInside];
-    [_scrollView addSubview:button];
 
     // 禁止反弹效果，隐藏滚动条
     [_scrollView setBounces:false];
@@ -256,7 +260,7 @@ SliderView ()<UIScrollViewDelegate>
 - (void)sliderClicked
 {
   if ([self.dataSource respondsToSelector:@selector(touchUpForSliderAtIndex:)])
-    [self.dataSource touchUpForSliderAtIndex:self.pageControl.currentPage];
+    [self.dataSource touchUpForSliderAtIndex:self.pageIndex];
 }
 
 #pragma mark - Timer

@@ -12,11 +12,15 @@
 #import "SliderViewController.h"
 #import "Stories.h"
 #import "Story.h"
+#import "StoryView.h"
 
 @interface
-SliderViewController ()<SliderViewDataSource>
+SliderViewController ()<SliderViewDataSource, StoryViewDelegate>
 @property (strong, nonatomic) NSArray<Stories*>* stories;
 @property (strong, nonatomic) Story* story;
+
+@property (assign, nonatomic) BOOL isAnimating;
+@property (strong, nonatomic) StoryView* storyView;
 @end
 
 @implementation SliderViewController
@@ -86,6 +90,39 @@ SliderViewController ()<SliderViewDataSource>
 - (NSString*)subTitleForSliderAtIndex:(NSInteger)index
 {
   return self.story.imageSource;
+}
+- (void)touchUpForSliderAtIndex:(NSInteger)index
+{
+  if (self.story != nil)
+    return;
+  if (self.isAnimating)
+    return;
+  self.isAnimating = true;
+
+  self.storyView = [[StoryView alloc] init];
+  self.storyView.storyViewDelegate = self;
+  Stories* selectedStories = self.stories[index];
+  self.storyView.identifier = selectedStories.identidier;
+
+  CGSize screenSize = [UIScreen mainScreen].bounds.size;
+  //从右向左的滑动动画
+  self.storyView.frame =
+    CGRectMake(screenSize.width, 0, screenSize.width, screenSize.height);
+  [self.view.window insertSubview:self.storyView aboveSubview:self.view];
+  [UIView animateWithDuration:0.3
+    animations:^{
+      self.storyView.frame =
+        CGRectMake(0, 0, screenSize.width, screenSize.height);
+    }
+    completion:^(BOOL finished) {
+      self.isAnimating = false;
+    }];
+}
+#pragma mark storyview delegate
+- (void)releaseStoryView
+{
+  [self.storyView removeFromSuperview];
+  self.storyView = nil;
 }
 #pragma mark release
 - (void)dealloc
