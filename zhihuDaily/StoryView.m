@@ -156,6 +156,5 @@ StoryView ()<UIScrollViewDelegate>
 {
   //在navigationController作为rootController的时候，好像不会调用子控制器的viewWillDisappear，只有在这里将其先行释放
   [self.sliderViewController.sliderView removeFromSuperview];
-  NSLog(@"释放了");
 }
 @end

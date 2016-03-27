@@ -31,7 +31,6 @@ SliderView ()<UIScrollViewDelegate>
 {
   [self removeFromSuperview];
   [[NSNotificationCenter defaultCenter] removeObserver:self];
-  NSLog(@"SliderView已释放");
 }
 #pragma mark - Initialization
 - (instancetype)initWithFrame:(CGRect)frame

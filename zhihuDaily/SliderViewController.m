@@ -128,6 +128,5 @@ SliderViewController ()<SliderViewDataSource, StoryViewDelegate>
 - (void)dealloc
 {
   [self removeFromParentViewController];
-  NSLog(@"SliderViewController已释放");
 }
 @end
